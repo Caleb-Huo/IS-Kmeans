@@ -1,0 +1,12 @@
+Package: IS-Kmeans
+Type: Package
+Title: Integrative Sparse Kmeans
+Version: 1.0
+Date: 2016-08-10
+Author: Caleb
+Maintainer: Who to complain to <zhh18@pitt.edu>
+Description: Perform sparse clustering integrating multiple Omcis datasets. Prior group information can be incorporated.
+License: GNU GENERAL PUBLIC LICENSE
+NeedsCompilation: no
+Packaged: 2016-08-10 02:35:48 UTC; Caleb
+RoxygenNote: 5.0.1
