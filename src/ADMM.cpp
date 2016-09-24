@@ -116,7 +116,6 @@ void copyZ(double *z_old,double *z, int J){
 
 void updateZ(double *x, double *y, double *z, double *r, int *groupLevel,int *genePos,double *coef, int J, int G, int L, double rho){
 	int curStart = 0;
-	int curPos;
 	double am;
 	int geneCurPos;
 	// agroupLen: group size of one group
@@ -142,16 +141,12 @@ void updateZ(double *x, double *y, double *z, double *r, int *groupLevel,int *ge
 		while(groupLevel[curStart+agroupLen] == g){
 			agroupLen++;		
 		}		
-		// am = (double*)malloc((agroupLen)*sizeof(double));
 		
 		for(int bp=curStart; bp<curStart + agroupLen; bp++){
 			am = coef[bp];
 			geneCurPos = genePos[bp];
 			b[geneCurPos] += am*am*rho;
-			cout<<"am: "<<am<<". rho: "<<rho<<endl;		
-			cout<<"geneCurPos: "<<geneCurPos<<". b[geneCurPos]: "<<b[geneCurPos]<<endl;
 			c[geneCurPos] += (rho * x[bp] + y[bp])*am;
-			//cout<<"am: "<<am<<". geneCurPos: "<<geneCurPos<<". b[geneCurPos]: "<<b[geneCurPos]<<". c[geneCurPos]: "<<c[geneCurPos]<<endl;
 		}
 		curStart += agroupLen;
 	}
@@ -189,27 +184,16 @@ void updateZ(double *x, double *y, double *z, double *r, int *groupLevel,int *ge
 		}
 	}	
 	
-	cout<<"free b"<<endl;
-	for(int j;j<=J;j++){
-		cout<<"j"<<j<<"b[j]: "<<b[j]<<endl;
-	}
 	free(b);
-	cout<<"free c"<<endl;
 	free(c);
-	cout<<"free rplusc"<<endl;
 	free(rplusc);
-	cout<<"free nonzero"<<endl;
 	free(nonzero);
-	cout<<"free nonZeroNum"<<endl;
 	free(nonZeroNum);
-	cout<<"free nonZeroDen"<<endl;
 	free(nonZeroDen);	
-	cout<<"free all"<<endl;
 }
 
 void updateY(double *x, double *y, double *z, int *groupLevel,int *genePos,double *coef, int G, double rho){
 	int curStart = 0;
-	int curPos;
 	// agroupLen: group size of one group
 	int agroupLen;
 
