@@ -157,7 +157,7 @@ void updateZ(double *x, double *y, double *z, double *r, int *groupLevel,int *ge
 	int nonZeroIndex=0;
 	for(int j=0;j<J;j++){		
 		rplusc[j] = r[j] + c[j];
-		cout<<"j: "<<j<<". rplusc[j]:"<<rplusc[j]<<". r[j]: "<<r[j]<<endl;
+		//cout<<"j: "<<j<<". rplusc[j]:"<<rplusc[j]<<". r[j]: "<<r[j]<<endl;
 		nonzero[j] = (rplusc[j] > 0 && fabs(rplusc[j])/r[j] > 1.0/1000) ? 1: 0;
 		if(nonzero[j]) countSumTure++;		
 	}
