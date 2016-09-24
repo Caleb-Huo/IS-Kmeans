@@ -8,8 +8,8 @@ UpdateWsADMM <- function(d, Cs, ws, currentY=NULL, groupInfo){
   J <- groupInfo$J
   L <- groupInfo$L
   G <- groupInfo$G
-  groupLevel <- groupInfo$groupLevel - 1
-  genePos <- groupInfo$genePos
+  groupLevel <- groupInfo$groupLevel 
+  genePos <- groupInfo$genePos - 1
   coef <- groupInfo$coef
   
     
