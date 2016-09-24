@@ -133,8 +133,8 @@ void updateZ(double *x, double *y, double *z, double *r, int *groupLevel,int *ge
 	}
 
 	for(int j=0;j<J;j++){
-		b[j] = 0;
-		c[j] = 0;
+		b[j] = 0.0;
+		c[j] = 0.0;
 	}
 	
 	for(int g=1;g<=G;g++){
@@ -148,6 +148,8 @@ void updateZ(double *x, double *y, double *z, double *r, int *groupLevel,int *ge
 			am = coef[bp];
 			geneCurPos = genePos[bp];
 			b[geneCurPos] += am*am*rho;
+			cout<<"am: "<<am<<". rho: "<<rho<<endl;		
+			cout<<"geneCurPos: "<<geneCurPos<<". b[geneCurPos]: "<<b[geneCurPos]<<endl;
 			c[geneCurPos] += (rho * x[bp] + y[bp])*am;
 			//cout<<"am: "<<am<<". geneCurPos: "<<geneCurPos<<". b[geneCurPos]: "<<b[geneCurPos]<<". c[geneCurPos]: "<<c[geneCurPos]<<endl;
 		}
@@ -163,7 +165,6 @@ void updateZ(double *x, double *y, double *z, double *r, int *groupLevel,int *ge
 	}
 	if(countSumTure==0){
 		cout<<"not enough penalty for lambda!"<<endl;
-		exit(0);
 	}
 
     double *nonZeroNum = (double*)malloc(countSumTure*sizeof(double));
@@ -187,13 +188,23 @@ void updateZ(double *x, double *y, double *z, double *r, int *groupLevel,int *ge
 			nonZeroIndex++;			
 		}
 	}	
-			
+	
+	cout<<"free b"<<endl;
+	for(int j;j<=J;j++){
+		cout<<"j"<<j<<"b[j]: "<<b[j]<<endl;
+	}
 	free(b);
+	cout<<"free c"<<endl;
 	free(c);
+	cout<<"free rplusc"<<endl;
 	free(rplusc);
+	cout<<"free nonzero"<<endl;
 	free(nonzero);
+	cout<<"free nonZeroNum"<<endl;
 	free(nonZeroNum);
+	cout<<"free nonZeroDen"<<endl;
 	free(nonZeroDen);	
+	cout<<"free all"<<endl;
 }
 
 void updateY(double *x, double *y, double *z, int *groupLevel,int *genePos,double *coef, int G, double rho){
@@ -316,7 +327,6 @@ void ADMM_updatew(double *x, double *y, double *z, double *r, double *objective,
     bool stopCrit = false;
     int iter = 0;
 	double error1 = 1.0/1000;
-	double error2 = 1.0/10000;
 	int maxiterADMM = 1000;
 	double *z_old = (double*)malloc(J*sizeof(double));
 	double thisError;
@@ -335,15 +345,22 @@ void ADMM_updatew(double *x, double *y, double *z, double *r, double *objective,
 	while(!stopCrit){
 	    iter++;
 	    copyZ(z_old,z,J);
-
+		cout<<"stop1"<<endl;
 		updateX(x, y, z, groupLevel,genePos,coef, G, rho);
+		cout<<"stop2"<<endl;
 		updateZ(x, y, z, r, groupLevel, genePos,coef, J, G, L, rho);
+		cout<<"stop3"<<endl;
 		updateY(x,y,z,groupLevel,genePos,coef,G,rho);
 		
+		cout<<"stop4"<<endl;
 		sumRP = updateR(x, z, groupLevel,genePos,coef, G);
+		cout<<"stop5"<<endl;
 		*objective = getObj(r,z,J,groupLevel,genePos,coef,G);
+		cout<<"stop6"<<endl;
 		sumDP = getRd2(z_old,z,groupLevel,genePos,coef,G,rho);
+		cout<<"stop7"<<endl;
 	    thisError = getError(z_old,z,J);
+		cout<<"stop8"<<endl;
     	
 		//cout<<"l2 of primal residual is: "<<sumRP<<endl;
 		//cout<<"l2 of dual residual is: "<<sumDP<<endl;

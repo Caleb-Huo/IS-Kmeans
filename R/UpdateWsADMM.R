@@ -8,7 +8,7 @@ UpdateWsADMM <- function(d, Cs, ws, currentY=NULL, groupInfo){
   J <- groupInfo$J
   L <- groupInfo$L
   G <- groupInfo$G
-  groupLevel <- groupInfo$groupLevel
+  groupLevel <- groupInfo$groupLevel - 1
   genePos <- groupInfo$genePos
   coef <- groupInfo$coef
   
@@ -18,7 +18,6 @@ UpdateWsADMM <- function(d, Cs, ws, currentY=NULL, groupInfo){
   x <- numeric(L)
   z <- ws
 	  
-  dyn.load('/home08/xiaoguang/IMSKM/code/ADMM.so')
   ADMMobj <- .C('ADMM_updatew_R', 
     x = as.double(x),
 	currentY = as.double(currentY),
