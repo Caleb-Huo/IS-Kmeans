@@ -331,22 +331,14 @@ void ADMM_updatew(double *x, double *y, double *z, double *r, double *objective,
 	while(!stopCrit){
 	    iter++;
 	    copyZ(z_old,z,J);
-		cout<<"stop1"<<endl;
 		updateX(x, y, z, groupLevel,genePos,coef, G, rho);
-		cout<<"stop2"<<endl;
 		updateZ(x, y, z, r, groupLevel, genePos,coef, J, G, L, rho);
-		cout<<"stop3"<<endl;
 		updateY(x,y,z,groupLevel,genePos,coef,G,rho);
 		
-		cout<<"stop4"<<endl;
 		sumRP = updateR(x, z, groupLevel,genePos,coef, G);
-		cout<<"stop5"<<endl;
 		*objective = getObj(r,z,J,groupLevel,genePos,coef,G);
-		cout<<"stop6"<<endl;
 		sumDP = getRd2(z_old,z,groupLevel,genePos,coef,G,rho);
-		cout<<"stop7"<<endl;
 	    thisError = getError(z_old,z,J);
-		cout<<"stop8"<<endl;
     	
 		//cout<<"l2 of primal residual is: "<<sumRP<<endl;
 		//cout<<"l2 of dual residual is: "<<sumDP<<endl;
