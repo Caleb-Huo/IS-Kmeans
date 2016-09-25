@@ -27,7 +27,8 @@ prepareGroup <- function(group, J, G0, gamma, alpha){
 	  endPos <- curPos + alen - 1
 	  groupLevel[curPos:endPos] <- g
 	  genePos[curPos:endPos] <- agroup
-	  coef[curPos:endPos] <- preCoef/groupFeatureCounts[agroup]
+	  a_inv_groupFeatureCounts <- 1/groupFeatureCounts[agroup]
+	  coef[curPos:endPos] <- preCoef*sqrt(a_inv_groupFeatureCounts)*sqrt(sum(a_inv_groupFeatureCounts))
 	  curPos <- curPos + alen
   }
 
