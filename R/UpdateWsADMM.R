@@ -32,6 +32,16 @@ UpdateWsADMM <- function(d, Cs, ws, currentY=NULL, groupInfo){
 	L = as.integer(L)
   )
   
+  ADMMobj$x <- NULL
+  ADMMobj$r <- NULL
+  
+  ADMMobj$groupLevel <- NULL
+  ADMMobj$genePos <- NULL
+  ADMMobj$coef <- NULL
+  ADMMobj$J <- NULL
+  ADMMobj$G <- NULL
+  ADMMobj$L <- NULL
+  
   return(ADMMobj)
 }
 
