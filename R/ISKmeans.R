@@ -134,9 +134,9 @@ function(d, K=NULL, gamma=NULL, alpha=0.5, group=NULL, nstart=20, wsPre=NULL ,sp
 	  BIC3 <- (n - 1) * sum(ifelse(ws!=0,1,0) * wcss$r) - log(n) * sum(ws!=0)
 
 	  BIC <-  - sum(ws * (1 - wcss$r)) - log(n*2*pi) * sum(ws)
-	  BIC1 <-  - sum(sum(ifelse(ws!=0,1,0) * (1 - wcss$r)) - log(n*2*pi) * sum(ws)
+	  BIC1 <-  - sum(ifelse(ws!=0,1,0) * (1 - wcss$r)) - log(n*2*pi) * sum(ws)
 	  BIC2 <-  - sum(ws * (1 - wcss$r)) - log(n*2*pi) * sum(ws!=0)
-	  BIC3 <-  - sum(sum(ifelse(ws!=0,1,0) * (1 - wcss$r)) - log(n*2*pi) * sum(ws!=0)
+	  BIC3 <-  - sum(ifelse(ws!=0,1,0) * (1 - wcss$r)) - log(n*2*pi) * sum(ws!=0)
 
 	  out[[i]] <- list(ws=ws, Cs=Cs, objective=ADMMobject$objective, BIC=BIC, BIC1=BIC1, BIC2=BIC2, BIC3=BIC3 , gamma=agamma,alpha=alpha)
 
