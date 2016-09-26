@@ -134,11 +134,11 @@ function(d, K=NULL, gamma=NULL, alpha=0.5, group=NULL, nstart=20, wsPre=NULL ,sp
 
 	  ## true BIC
 	  d <- sum(ws)
-	  BIC1 <- -d*(log(w*pi) + log(n) + (n - 1)) + (n - 1) * sum(ws * wcss$r)
+	  BIC1 <- -d*(log(2*pi) + log(n) + (n - 1)) + (n - 1) * sum(ws * wcss$r)
 	  
 	  ## true AIC
 	  d <- sum(ws)
-	  BIC2 <- -d*(log(w*pi) + 2 + (n - 1)) + (n - 1) * sum(ws * wcss$r)
+	  BIC2 <- -d*(log(2*pi) + 2 + (n - 1)) + (n - 1) * sum(ws * wcss$r)
 
 	  ## true AIC
 	  d <- sum(ws)
