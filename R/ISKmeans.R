@@ -129,9 +129,9 @@ function(d, K=NULL, gamma=NULL, alpha=0.5, group=NULL, nstart=20, wsPre=NULL ,sp
 	  wsPre <- ws
 	  n <- nrow(d)
 	  BIC <- (n - 1) * sum(ws * wcss$r) - log(n) * sum(ws)
-	  BIC1 <- (n - 1) * sum(wcss$r) - log(n) * sum(ws)
+	  BIC1 <- (n - 1) * sum(ifelse(ws!=0,1,0) * wcss$r) - log(n) * sum(ws)
 	  BIC2 <- (n - 1) * sum(ws * wcss$r) - log(n) * sum(ws!=0)
-	  BIC3 <- (n - 1) * sum(wcss$r) - log(n) * sum(ws!=0)
+	  BIC3 <- (n - 1) * sum(ifelse(ws!=0,1,0) * wcss$r) - log(n) * sum(ws!=0)
 
 	  out[[i]] <- list(ws=ws, Cs=Cs, objective=ADMMobject$objective, BIC=BIC, BIC1=BIC1, BIC2=BIC2, BIC3=BIC3 , gamma=agamma,alpha=alpha)
 
