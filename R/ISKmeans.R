@@ -128,15 +128,21 @@ function(d, K=NULL, gamma=NULL, alpha=0.5, group=NULL, nstart=20, wsPre=NULL ,sp
 	  wcss=GetWCSS(d, Cs)
 	  wsPre <- ws
 	  n <- nrow(d)
-	  BIC <- (n - 1) * sum(ws * wcss$r) - log(n) * sum(ws)
-	  BIC1 <- (n - 1) * sum(ifelse(ws!=0,1,0) * wcss$r) - log(n) * sum(ws)
-	  BIC2 <- (n - 1) * sum(ws * wcss$r) - log(n) * sum(ws!=0)
-	  BIC3 <- (n - 1) * sum(ifelse(ws!=0,1,0) * wcss$r) - log(n) * sum(ws!=0)
 
-	  BIC <-  - sum(ws * (1 - wcss$r)) - log(n*2*pi) * sum(ws)
-	  BIC1 <-  - sum(ifelse(ws!=0,1,0) * (1 - wcss$r)) - log(n*2*pi) * sum(ws)
-	  BIC2 <-  - sum(ws * (1 - wcss$r)) - log(n*2*pi) * sum(ws!=0)
-	  BIC3 <-  - sum(ifelse(ws!=0,1,0) * (1 - wcss$r)) - log(n*2*pi) * sum(ws!=0)
+	  ## original implementation
+	  BIC <- (n - 1) * sum(ws * wcss$r) - log(n) * sum(ws)
+
+	  ## true BIC
+	  d <- sum(ws)
+	  BIC1 <- -d*(log(w*pi) + log(n) + (n - 1)) + (n - 1) * sum(ws * wcss$r)
+	  
+	  ## true AIC
+	  d <- sum(ws)
+	  BIC2 <- -d*(log(w*pi) + 2 + (n - 1)) + (n - 1) * sum(ws * wcss$r)
+
+	  ## true AIC
+	  d <- sum(ws)
+	  BIC3 <- (n - 1) * sum(ws * wcss$r) - 2 * sum(ws)
 
 	  out[[i]] <- list(ws=ws, Cs=Cs, objective=ADMMobject$objective, BIC=BIC, BIC1=BIC1, BIC2=BIC2, BIC3=BIC3 , gamma=agamma,alpha=alpha)
 
