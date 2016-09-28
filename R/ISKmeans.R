@@ -96,27 +96,27 @@ function(d, K=NULL, gamma=NULL, alpha=0.5, group=NULL, nstart=20, wsPre=NULL ,sp
 
 
   ## iteratively update CS, WS
-
-  gamma <- sort(gamma,decreasing=TRUE)
   out <- replicate(length(gamma),list())
   for(i in 1:length(gamma)){
 	  agamma <- gamma[i]
-	  if(agamma <= 0){
-  	  	agamma <- 1e-7
-	  	agamma <- 0
-	  }
 
 	  ws.old <- rnorm(J)
 	  ws <- iniws
 	  niter <- 0
 	  currentY <- NULL
 
+	  nonTrivialFlag = 1
       groupInfo <- prepareGroup(group, J, G0, agamma, alpha)
 	  while((sum(abs(ws-ws.old))/sum(abs(ws.old)))>1e-4 && niter<maxiter){
 	    if(!silent) cat('Iteration',niter, ':\n', fill=FALSE)
 	    niter <- niter+1
 	    ws.old <- ws
-		  cat('Updating CS...\n', fill=FALSE)
+		if(sum(ws!=0)<1){
+			nonTrivialFlag=0
+			objective = 0
+			break
+		}
+		cat('Updating CS...\n', fill=FALSE)
 	    if(niter>1) Cs <- UpdateCs(d, K, ws, Cs) # if niter=1, no need to update!!
 	 	  cat('Updating WS...\n', fill=FALSE)
 		ADMMobject <- UpdateWsADMM(d, Cs, ws, currentY=currentY, groupInfo)
@@ -124,17 +124,17 @@ function(d, K=NULL, gamma=NULL, alpha=0.5, group=NULL, nstart=20, wsPre=NULL ,sp
 		currentY <- ADMMobject$currentY
 	  }
 
-	  ##ws[ws<sum(ws)/ncol(d)] <- 0
-	  Cs <- UpdateCs(d, K, ws, Cs)
-	  wcss=GetWCSS(d, Cs)
-	  wsPre <- ws
-	  n <- nrow(d)
-
-	  ## original implementation
-	  ## BIC <- (n - 1) * sum(ws * wcss$r) - log(n) * sum(ws)
-
-
-	  out[[i]] <- list(ws=ws, Cs=Cs, objective=ADMMobject$objective, gamma=agamma,alpha=alpha)
+	  if(nonTrivialFlag){
+		  ##ws[ws<sum(ws)/ncol(d)] <- 0
+		  Cs <- UpdateCs(d, K, ws, Cs)
+		  wcss=GetWCSS(d, Cs)
+		  wsPre <- ws
+		  n <- nrow(d)
+		  objective = ADMMobject$objective
+		  ## original implementation
+		  ## BIC <- (n - 1) * sum(ws * wcss$r) - log(n) * sum(ws)	  	
+	  }
+	  out[[i]] <- list(ws=ws, Cs=Cs, objective=objective, gamma=agamma,alpha=alpha)
 
   }
 
