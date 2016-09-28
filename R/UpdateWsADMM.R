@@ -1,12 +1,7 @@
 UpdateWsADMM <- function(d, Cs, ws, currentY=NULL, groupInfo){
 
-	print('error 1')
-	print(dim(d))
-	print(table(Cs))
     wcss.perfeature <- GetWCSS(d, Cs)$wcss.perfeature
-	print('error 2')
     tss.perfeature <- GetWCSS(d, rep(1, nrow(d)))$wcss.perfeature
-	print('error 3')
     bcss.perfeature <- tss.perfeature - wcss.perfeature
     r <- bcss.perfeature/tss.perfeature
 

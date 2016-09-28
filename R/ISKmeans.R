@@ -131,21 +131,10 @@ function(d, K=NULL, gamma=NULL, alpha=0.5, group=NULL, nstart=20, wsPre=NULL ,sp
 	  n <- nrow(d)
 
 	  ## original implementation
-	  BIC <- (n - 1) * sum(ws * wcss$r) - log(n) * sum(ws)
+	  ## BIC <- (n - 1) * sum(ws * wcss$r) - log(n) * sum(ws)
 
-	  ## true BIC
-	  d <- sum(ws)
-	  BIC1 <- -d*(log(2*pi) + log(n) + (n - 1)) + (n - 1) * sum(ws * wcss$r)
-	  
-	  ## true AIC
-	  d <- sum(ws)
-	  BIC2 <- -d*(log(2*pi) + 2 + (n - 1)) + (n - 1) * sum(ws * wcss$r)
 
-	  ## true AIC
-	  d <- sum(ws)
-	  BIC3 <- (n - 1) * sum(ws * wcss$r) - 2 * sum(ws)
-
-	  out[[i]] <- list(ws=ws, Cs=Cs, objective=ADMMobject$objective, BIC=BIC, BIC1=BIC1, BIC2=BIC2, BIC3=BIC3 , gamma=agamma,alpha=alpha)
+	  out[[i]] <- list(ws=ws, Cs=Cs, objective=ADMMobject$objective, gamma=agamma,alpha=alpha)
 
   }
 
