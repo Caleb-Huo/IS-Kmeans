@@ -112,12 +112,13 @@ function(d, K=NULL, gamma=NULL, alpha=0.5, group=NULL, nstart=20, wsPre=NULL ,sp
 	    niter <- niter+1
 	    ws.old <- ws
 		if(sum(ws!=0)<1){
-			print(sum(ws!=0))
 			nonTrivialFlag=0
 			objective = 0
 			break
 		}
 		cat('Updating CS...\n', fill=FALSE)
+		print(ws)
+		print(table(Cs))
 	    if(niter>1) Cs <- UpdateCs(d, K, ws, Cs) # if niter=1, no need to update!!
 	 	  cat('Updating WS...\n', fill=FALSE)
 		ADMMobject <- UpdateWsADMM(d, Cs, ws, currentY=currentY, groupInfo)
