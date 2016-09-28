@@ -102,7 +102,8 @@ function(d, K=NULL, gamma=NULL, alpha=0.5, group=NULL, nstart=20, wsPre=NULL ,sp
   for(i in 1:length(gamma)){
 	  agamma <- gamma[i]
 	  if(agamma <= 0){
-	  	agamma <- 1e-7
+  	  	agamma <- 1e-7
+	  	agamma <- 0
 	  }
 
 	  ws.old <- rnorm(J)
