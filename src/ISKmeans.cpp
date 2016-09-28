@@ -338,6 +338,7 @@ void ADMM_updatew(double *x, double *y, double *z, double *r, double *objective,
 		
 		sumRP = updateR(x, z, groupLevel,genePos,coef, G);
 		*objective = getObj(r,z,J,groupLevel,genePos,coef,G);
+		cout<<objective<<*objective<<endl;
 		sumDP = getRd2(z_old,z,groupLevel,genePos,coef,G,rho);
 	    thisError = getError(z_old,z,J);
     	
