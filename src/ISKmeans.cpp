@@ -161,9 +161,11 @@ void updateZ(double *x, double *y, double *z, double *r, int *groupLevel,int *ge
 		nonzero[j] = (rplusc[j] > 0 && fabs(rplusc[j])/r[j] > 1.0/1000) ? 1: 0;
 		if(nonzero[j]) countSumTure++;		
 	}
+	/*
 	if(countSumTure==0){
 		cout<<"not enough penalty for lambda!"<<endl;
 	}
+	*/
 
     double *nonZeroNum = (double*)malloc(countSumTure*sizeof(double));
     double *nonZeroDen = (double*)malloc(countSumTure*sizeof(double));
