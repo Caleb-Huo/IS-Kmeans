@@ -85,7 +85,7 @@ function(d, K=NULL, gamma=NULL, alpha=0.5, group=NULL, nstart=20, wsPre=NULL ,sp
 	Cs <- UpdateCs(d, K, iniws, Cs=NULL)
   } else if(sparseStart){
   	## sparse start
-  	skm <- KMeansSparseCluster(d,K=K,wbounds=10,nstart=nstart)[[1]]
+  	skm <- KMeansSparseCluster(d,K=K,wbounds=10,nstart=nstart,silent=silent)[[1]]
 	Cs <- skm$Cs
 	iniws <- skm$ws
   }else{
