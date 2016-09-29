@@ -111,10 +111,10 @@ function(d, K=NULL, gamma=NULL, alpha=0.5, group=NULL, nstart=20, wsPre=NULL ,sp
 	    if(!silent) cat('Iteration',niter, ':\n', fill=FALSE)
 	    niter <- niter+1
 	    ws.old <- ws
-		print(sum(ws!=0))
 		if(sum(ws!=0)<1){
-			nonTrivialFlag=0
-			objective = 0
+			nonTrivialFlag<-0
+			objective <- 0
+			obj0 <- 0
 			break
 		}
 		if(!silent) cat('Updating CS...\n', fill=FALSE)
@@ -132,10 +132,11 @@ function(d, K=NULL, gamma=NULL, alpha=0.5, group=NULL, nstart=20, wsPre=NULL ,sp
 		  wsPre <- ws
 		  n <- nrow(d)
 		  objective = ADMMobject$objective
+		  obj0 <- sum(ws * wcss$r)
 		  ## original implementation
 		  ## BIC <- (n - 1) * sum(ws * wcss$r) - log(n) * sum(ws)	  	
 	  }
-	  out[[i]] <- list(ws=ws, Cs=Cs, objective=objective, gamma=agamma,alpha=alpha)
+	  out[[i]] <- list(ws=ws, Cs=Cs, obj0 = obj0, objective=objective, gamma=agamma,alpha=alpha)
 
   }
 
