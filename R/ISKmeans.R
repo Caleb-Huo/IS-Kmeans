@@ -111,6 +111,7 @@ function(d, K=NULL, gamma=NULL, alpha=0.5, group=NULL, nstart=20, wsPre=NULL ,sp
 	    if(!silent) cat('Iteration',niter, ':\n', fill=FALSE)
 	    niter <- niter+1
 	    ws.old <- ws
+		print(sum(ws!=0))
 		if(sum(ws!=0)<1){
 			nonTrivialFlag=0
 			objective = 0
