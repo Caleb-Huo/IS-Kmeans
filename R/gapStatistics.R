@@ -55,16 +55,17 @@ function(d,K=3,B=10,gamma=NULL,alpha=1, group=NULL,seed=15213,silence=FALSE){
       stop("gamma should be greater than or equal to 0")
 
   ## get true objective score
-  cat("calculating true obj0...\n")
+  if (!silence)
+  	cat("calculating true score...\n")
   set.seed(seed)
-  trueRes <- ISKmeans(d,K=K,gamma=gamma,alpha=alpha,group=group,silent=FALSE)
+  trueRes <- ISKmeans(d,K=K,gamma=gamma,alpha=alpha,group=group,silent=TRUE)
 
   numF <- sapply(trueRes,function(x) sum(x$ws!=0))
   nGamma <- sapply(trueRes,function(x) x$gamma)
   score <- sapply(trueRes,function(x) x$obj0)
 
   if (!silence)
-     cat("calculating gap stat, b = 1,2,..., B (= ", B, ")  [one \".\" per sample]:\n", sep = "")
+     cat("calculating permutated score, b = 1,2,..., B (= ", B, ")  [one \".\" per sample]:\n", sep = "")
    E.score.full <- NULL
   for(b in 1:B){
 	  cat(".", if (b%%50 == 0)
