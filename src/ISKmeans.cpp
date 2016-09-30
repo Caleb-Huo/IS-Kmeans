@@ -203,12 +203,7 @@ void updateZbyX(double *x, double *z, int *groupLevel,int *genePos,double *coef,
 	int geneCurPos;
 	// agroupLen: group size of one group
 	int agroupLen;
-	
-	// ini z
-	for(int j=0;j<J;j++){
-		z[j] = 0.0;
-	}
-		
+			
 	for(int g=1;g<=G;g++){
 		agroupLen = 0;
 		while(groupLevel[curStart+agroupLen] == g){
@@ -218,11 +213,9 @@ void updateZbyX(double *x, double *z, int *groupLevel,int *genePos,double *coef,
 		for(int bp=curStart; bp<curStart + agroupLen; bp++){
 			am = coef[bp];
 			geneCurPos = genePos[bp];
-			if(x[bp]==0){
-				continue;
-			} else {
-				z[geneCurPos] += x[bp]/am;
-			}
+			if(am!=0 && x[bp]==0){
+				z[geneCurPos] = 0;
+			} 
 		}
 		curStart += agroupLen;
 	}
