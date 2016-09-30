@@ -122,6 +122,7 @@ function(d, K=NULL, gamma=NULL, alpha=0.5, group=NULL, nstart=20, wsPre=NULL ,sp
 	 	if(!silent) cat('Updating WS...\n', fill=FALSE)
 		ADMMobject <- UpdateWsADMM(d, Cs, ws, currentY=currentY, groupInfo)
 		ws <- ADMMobject$z
+		print(ws)
 		currentY <- ADMMobject$currentY
 	  }
 
