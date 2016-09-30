@@ -197,6 +197,33 @@ void updateZ(double *x, double *y, double *z, double *r, int *groupLevel,int *ge
 	free(nonZeroDen);	
 }
 
+void updateZbyX(double *x, double *z, int *groupLevel,int *genePos,double *coef, int J, int G){
+	int curStart = 0;
+	double am;
+	int geneCurPos;
+	// agroupLen: group size of one group
+	int agroupLen;
+	
+	// ini z
+	for(int j=0;j<J;j++){
+		z[j] = 0.0;
+	}
+		
+	for(int g=1;g<=G;g++){
+		agroupLen = 0;
+		while(groupLevel[curStart+agroupLen] == g){
+			agroupLen++;		
+		}		
+		
+		for(int bp=curStart; bp<curStart + agroupLen; bp++){
+			am = coef[bp];
+			geneCurPos = genePos[bp];
+			z[geneCurPos] += x[bp]/am;
+		}
+		curStart += agroupLen;
+	}
+}
+
 void updateY(double *x, double *y, double *z, int *groupLevel,int *genePos,double *coef, int G, double rho){
 	int curStart = 0;
 	// agroupLen: group size of one group
@@ -354,6 +381,9 @@ void ADMM_updatew(double *x, double *y, double *z, double *r, double *objective,
 		if(sumDP > mu * sumRP) rho = rho / decr;								
 	    if( (sumRP<error1 && sumDP<error1) || iter>maxiterADMM) stopCrit = true;		
 	}
+	
+	// update z by x
+	updateZbyX(x, z, groupLevel, genePos, coef, J, G);
     free(z_old);
 	
 }
