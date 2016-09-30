@@ -219,7 +219,9 @@ void updateZbyX(double *x, double *z, int *groupLevel,int *genePos,double *coef,
 			am = coef[bp];
 			geneCurPos = genePos[bp];
 			z[geneCurPos] += x[bp]/am;
-			cout<<z[geneCurPos]<<endl;
+			cout<<"x[bp]"<<x[bp]<<endl;
+			cout<<"am"<<am<<endl;
+			cout<<"z[geneCurPos]"<<z[geneCurPos]<<endl;
 		}
 		curStart += agroupLen;
 	}
