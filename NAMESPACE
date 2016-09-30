@@ -2,3 +2,4 @@
 
 useDynLib(ISKmeans) 
 export(ISKmeans)
+export(gapStatistics)
