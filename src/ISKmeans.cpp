@@ -275,7 +275,7 @@ double updateR(double *x, double *z, int *groupLevel,int *genePos,double *coef, 
 			curPos = curStart + ap;
 			a[ap] = x[curPos] - coef[curPos] * z[genePos[curPos]];
 		}
-		sumRP += l2nV(a,agroupLen);
+		sumRP += l2nV(a);
 		curStart += agroupLen;	
 		//free(a);
 	}
