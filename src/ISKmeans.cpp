@@ -241,7 +241,6 @@ void updateY(double *x, double *y, double *z, int *groupLevel,int *genePos,doubl
 
 double updateR(double *x, double *z, int *groupLevel,int *genePos,double *coef, int G){
 	double sumRP = 0;
-	double *a;
 	int curStart = 0;
 	int curPos;
 	// agroupLen: group size of one group
@@ -253,8 +252,7 @@ double updateR(double *x, double *z, int *groupLevel,int *genePos,double *coef, 
 		while(groupLevel[curStart+agroupLen] == g){
 			agroupLen++;		
 		}
-		
-		a = (double*)malloc((agroupLen)*sizeof(double));		
+		double *a = (double*)malloc((agroupLen)*sizeof(double));				
 		for(int ap=0; ap<agroupLen; ap++){
 			curPos = curStart + ap;
 			a[ap] = x[curPos] - coef[curPos] * z[genePos[curPos]];
