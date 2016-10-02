@@ -341,7 +341,10 @@ void ADMM_updatew(double *x, double *y, double *z, double *r, double *objective,
     int iter = 0;
 	double error1 = 1.0/1000;
 	int maxiterADMM = 1000;
+	cout<<"error-1"<<endl;
+	
 	double *z_old = (double*)malloc(J*sizeof(double));
+	cout<<"error0"<<endl;
 	double thisError;
 	
 	// primal residual sum of square;
@@ -400,7 +403,9 @@ void ADMM_updatew(double *x, double *y, double *z, double *r, double *objective,
 
 extern "C" {
 	void ADMM_updatew_R(double *x, double *y, double *z, double *r, double *objective, int *groupLevel,int *genePos,double *coef, int *J, int *G, int *L){
+		cout<<"error-2"<<endl;
 		ADMM_updatew(x, y, z, r, objective, groupLevel, genePos, coef, *J, *G, *L);
+		
 	}
 }
 
