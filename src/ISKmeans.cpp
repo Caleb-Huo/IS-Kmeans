@@ -3,6 +3,8 @@
 #include <stdlib.h> 
 #include <iostream>
 #include <math.h>
+#include <vector>
+
 using namespace std;
 
 double l2n(double *vec, int n){
@@ -76,7 +78,7 @@ void updateX(double *x, double *y, double *z, int *groupLevel,int *genePos,doubl
 	
 	// agroupLen: group size of one group
 	int agroupLen;
-	double *a;
+	//double *a;
 	
 	// a: temp array to store results	
 	for(int g=1;g<=G;g++){
@@ -84,7 +86,9 @@ void updateX(double *x, double *y, double *z, int *groupLevel,int *genePos,doubl
 		while(groupLevel[curStart+agroupLen] == g){
 			agroupLen++;		
 		}		
-		a = (double*)malloc((agroupLen)*sizeof(double));		
+  	    std::vector<double> a(agroupLen, 0);
+		
+		//a = (double*)malloc((agroupLen)*sizeof(double));		
 		for(int ap=0; ap<agroupLen; ap++){
 			curPos = curStart + ap;
 			a[ap] = coef[curPos] * z[genePos[curPos]] - y[curPos]/rho;
@@ -104,7 +108,7 @@ void updateX(double *x, double *y, double *z, int *groupLevel,int *genePos,doubl
 			}			
 		}
 		curStart += agroupLen;
-		free(a);
+		//free(a);
 	}
 	
 }
