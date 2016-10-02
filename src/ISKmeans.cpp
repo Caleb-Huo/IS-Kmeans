@@ -55,6 +55,8 @@ double BinarySearch_ADMM(vector<double>& numerator, vector<double>& denominator)
   double minDen = denominator[0];
   double su;
   
+  int n = numerator.size();
+  
   for(int i=1;i<n;i++){
 	  if(maxNum<numerator[i]){
 	  	maxNum = numerator[i];
