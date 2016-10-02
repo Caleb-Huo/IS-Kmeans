@@ -290,7 +290,7 @@ double getObj(double *r,double *z,int J,int *groupLevel,int *genePos,double *coe
 	
 	int curStart = 0;
 	int curPos;
-	double *a;
+	//double *a;
 	
 	// agroupLen: group size of one group
 	int agroupLen;
@@ -300,17 +300,19 @@ double getObj(double *r,double *z,int J,int *groupLevel,int *genePos,double *coe
 		while(groupLevel[curStart+agroupLen] == g){
 			agroupLen++;		
 		}
+  	    
+		std::vector<double> a(agroupLen, 0);
 		
-		a = (double*)malloc((agroupLen)*sizeof(double));		
+		//a = (double*)malloc((agroupLen)*sizeof(double));		
 		for(int ap=0; ap<agroupLen; ap++){
 			curPos = curStart + ap;
 			a[ap] = coef[curPos] * z[genePos[curPos]];
 		}
 		
-		obj += l2n(a,agroupLen);
+		obj += l2nV(a);
 		
 		curStart += agroupLen;	
-		free(a);
+		//free(a);
 	}
 	return obj;
 }
