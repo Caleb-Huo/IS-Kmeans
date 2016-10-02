@@ -124,7 +124,8 @@ void updateZ(double *x, double *y, double *z, double *r, int *groupLevel,int *ge
 	
 	// new double [totalLength]()
 	// a: temp array to store results
-    double *b = (double*)malloc(J*sizeof(double));
+    // double *b = (double*)malloc(J*sizeof(double));
+	double b[] = z;
     double *c = (double*)malloc(J*sizeof(double));
 	double *rplusc = (double*)malloc(J*sizeof(double));
     int *nonzero = (int*)malloc(J*sizeof(int));
