@@ -168,7 +168,8 @@ void updateZ(double *x, double *y, double *z, double *r, int *groupLevel,int *ge
 	for(int j=0;j<J;j++){		
 		rplusc[j] = r[j] + c[j];
 		//cout<<"j: "<<j<<". rplusc[j]:"<<rplusc[j]<<". r[j]: "<<r[j]<<endl;
-		nonzero[j] = (rplusc[j] > 0 && fabs(rplusc[j])/r[j] > 1.0/1000) ? 1: 0;
+		nonzero[j] = (rplusc[j] > 0) ? 1: 0;
+		//nonzero[j] = (rplusc[j] > 0 && fabs(rplusc[j])/r[j] > 1.0/1000) ? 1: 0;
 		if(nonzero[j]) countSumTure++;		
 	}
 	/*
@@ -259,7 +260,7 @@ double updateR(double *x, double *z, int *groupLevel,int *genePos,double *coef, 
 	int curPos;
 	// agroupLen: group size of one group
 	int agroupLen;
-	double *a;
+	//double *a;
 	
 	for(int g=1;g<=G;g++){
 		agroupLen = 0;
@@ -267,14 +268,16 @@ double updateR(double *x, double *z, int *groupLevel,int *genePos,double *coef, 
 		while(groupLevel[curStart+agroupLen] == g){
 			agroupLen++;		
 		}
-		a = (double*)malloc((agroupLen)*sizeof(double));				
+  	    std::vector<double> a(agroupLen, 0);
+		
+		//a = (double*)malloc((agroupLen)*sizeof(double));				
 		for(int ap=0; ap<agroupLen; ap++){
 			curPos = curStart + ap;
 			a[ap] = x[curPos] - coef[curPos] * z[genePos[curPos]];
 		}
-		sumRP += l2n(a,agroupLen);
+		sumRP += l2nV(a,agroupLen);
 		curStart += agroupLen;	
-		free(a);
+		//free(a);
 	}
 	return sumRP;
 }
