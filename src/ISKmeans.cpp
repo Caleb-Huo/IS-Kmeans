@@ -102,7 +102,7 @@ void updateX(double *x, double *y, double *z, int *groupLevel,int *genePos,doubl
 			a[ap] = coef[curPos] * z[genePos[curPos]] - y[curPos]/rho;
 		}
 		
-		l2na = l2n(a);
+		l2na = l2nV(a);
 		//  cout<<"g:"<<g<<". agroupLen: "<<agroupLen<<endl;				
 		// cout<<"g:"<<g<<". l2na: "<<l2na<<endl;				
 	    if(l2na*rho<=1){
