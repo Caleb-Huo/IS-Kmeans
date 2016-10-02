@@ -394,6 +394,9 @@ void ADMM_updatew(double *x, double *y, double *z, double *r, double *objective,
 	cout<<"error10"<<endl;
 	
 	updateZbyX(x, z, groupLevel, genePos, coef, J, G);
+	for(int j=0;j<J;j++){
+		cout<<z[j];
+	}
 	cout<<"error11"<<endl;
     free(z_old);
 	cout<<"error12"<<endl;
