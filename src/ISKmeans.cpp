@@ -15,6 +15,14 @@ double l2n(double *vec, int n){
        return sqrt(accum);
 }
 
+double l2nV(vector<int>& vec){
+    double accum = 0.;
+       for (int i = 0; i < vec.size(); ++i) {
+           accum += vec[i] * vec[i];
+       }
+       return sqrt(accum);
+}
+
 double l2nDivision(double *numerator, double *denominator,int n){
   // calculate 	l2n((numerator+lambda)/(denominator+lambda));	
 	double sum2=0;
@@ -94,7 +102,7 @@ void updateX(double *x, double *y, double *z, int *groupLevel,int *genePos,doubl
 			a[ap] = coef[curPos] * z[genePos[curPos]] - y[curPos]/rho;
 		}
 		
-		l2na = l2n(a,agroupLen);
+		l2na = l2n(a);
 		//  cout<<"g:"<<g<<". agroupLen: "<<agroupLen<<endl;				
 		// cout<<"g:"<<g<<". l2na: "<<l2na<<endl;				
 	    if(l2na*rho<=1){
