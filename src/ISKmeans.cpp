@@ -7,14 +7,6 @@
 
 using namespace std;
 
-double l2n(double *vec, int n){
-    double accum = 0.;
-       for (int i = 0; i < n; ++i) {
-           accum += vec[i] * vec[i];
-       }
-       return sqrt(accum);
-}
-
 double l2nV(vector<double>& vec){
     double accum = 0.;
        for (int i = 0; i < vec.size(); ++i) {
@@ -123,8 +115,8 @@ void updateX(double *x, double *y, double *z, int *groupLevel,int *genePos,doubl
 	
 }
 
-void copyZ(double *z_old,double *z, int J){
-	for(int j=0;j<J;j++){
+void copyZ(vector<double>& z_old,double *z){
+	for(int j=0;j<z_old.size();j++){
 		z_old[j] = z[j];
 	}
 }
@@ -317,7 +309,7 @@ double getObj(double *r,double *z,int J,int *groupLevel,int *genePos,double *coe
 	return obj;
 }
 
-double getRd2(double *z_old,double *z,int *groupLevel,int *genePos,double *coef, int G, double rho){
+double getRd2(vector<double>& z_old,double *z,int *groupLevel,int *genePos,double *coef, int G, double rho){
 	double Rd2=0;
     double a;
 	
@@ -345,7 +337,7 @@ double getRd2(double *z_old,double *z,int *groupLevel,int *genePos,double *coef,
 	return Rd2;
 }
 
-double getError(double *z_old,double *z, int J){
+double getError(vector<double>& z_old,double *z, int J){
 	double numerator = 0;
 	double denominator = 0;
 	for(int j=0;j<J;j++){
@@ -360,10 +352,10 @@ void ADMM_updatew(double *x, double *y, double *z, double *r, double *objective,
     int iter = 0;
 	double error1 = 1.0/1000;
 	int maxiterADMM = 1000;
-	cout<<"error-1"<<endl;
 	
-	double *z_old = (double*)malloc(J*sizeof(double));
-	cout<<"error0"<<endl;
+	std::vector<double> z_old(z, z+J);
+	
+	//double *z_old = (double*)malloc(J*sizeof(double));
 	double thisError;
 	
 	// primal residual sum of square;
@@ -379,25 +371,16 @@ void ADMM_updatew(double *x, double *y, double *z, double *r, double *objective,
 	
 	while(!stopCrit){
 	    iter++;
-		cout<<"error1"<<endl;
-	    copyZ(z_old,z,J);
-		cout<<"error2"<<endl;
+	    copyZ(z_old,z);
 		updateX(x, y, z, groupLevel,genePos,coef, G, rho);
-		cout<<"error3"<<endl;
 		updateZ(x, y, z, r, groupLevel, genePos,coef, J, G, L, rho);
-		cout<<"error4"<<endl;
 		updateY(x,y,z,groupLevel,genePos,coef,G,rho);
-		cout<<"error5"<<endl;
 		
 		sumRP = updateR(x, z, groupLevel,genePos,coef, G);
-		cout<<"error6"<<endl;
 		*objective = getObj(r,z,J,groupLevel,genePos,coef,G);
-		cout<<"error7"<<endl;
 		//cout<<"objective: "<<*objective<<endl;
 		sumDP = getRd2(z_old,z,groupLevel,genePos,coef,G,rho);
-		cout<<"error8"<<endl;
 	    thisError = getError(z_old,z,J);
-		cout<<"error9"<<endl;
     	
 		//cout<<"l2 of primal residual is: "<<sumRP<<endl;
 		//cout<<"l2 of dual residual is: "<<sumDP<<endl;
@@ -411,14 +394,8 @@ void ADMM_updatew(double *x, double *y, double *z, double *r, double *objective,
 	}
 	
 	// update z by x
-	cout<<"error10"<<endl;
-	
 	updateZbyX(x, z, groupLevel, genePos, coef, J, G);
-	cout<<z[0];
-	cout<<"error11"<<endl;
-    free(z_old);
-	cout<<z[0];
-	cout<<"error12"<<endl;
+    //free(z_old);
 	
 }
 
