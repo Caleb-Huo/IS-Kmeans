@@ -15,7 +15,7 @@ double l2n(double *vec, int n){
        return sqrt(accum);
 }
 
-double l2nV(vector<int>& vec){
+double l2nV(vector<double>& vec){
     double accum = 0.;
        for (int i = 0; i < vec.size(); ++i) {
            accum += vec[i] * vec[i];
