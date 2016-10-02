@@ -77,15 +77,13 @@ void updateX(double *x, double *y, double *z, int *groupLevel,int *genePos,doubl
 	// agroupLen: group size of one group
 	int agroupLen;
 	
-	// a: temp array to store results
-    double *a;
-	
+	// a: temp array to store results	
 	for(int g=1;g<=G;g++){
 		agroupLen = 0;
 		while(groupLevel[curStart+agroupLen] == g){
 			agroupLen++;		
 		}		
-		a = (double*)malloc((agroupLen)*sizeof(double));		
+		double *a = (double*)malloc((agroupLen)*sizeof(double));		
 		for(int ap=0; ap<agroupLen; ap++){
 			curPos = curStart + ap;
 			a[ap] = coef[curPos] * z[genePos[curPos]] - y[curPos]/rho;
@@ -272,7 +270,6 @@ double getObj(double *r,double *z,int J,int *groupLevel,int *genePos,double *coe
 	
 	int curStart = 0;
 	int curPos;
-    double *a;
 	
 	// agroupLen: group size of one group
 	int agroupLen;
@@ -283,7 +280,7 @@ double getObj(double *r,double *z,int J,int *groupLevel,int *genePos,double *coe
 			agroupLen++;		
 		}
 		
-		a = (double*)malloc((agroupLen)*sizeof(double));		
+		double *a = (double*)malloc((agroupLen)*sizeof(double));		
 		for(int ap=0; ap<agroupLen; ap++){
 			curPos = curStart + ap;
 			a[ap] = coef[curPos] * z[genePos[curPos]];
@@ -394,11 +391,10 @@ void ADMM_updatew(double *x, double *y, double *z, double *r, double *objective,
 	cout<<"error10"<<endl;
 	
 	updateZbyX(x, z, groupLevel, genePos, coef, J, G);
-	for(int j=0;j<J;j++){
-		cout<<z[j];
-	}
+	cout<<z[0];
 	cout<<"error11"<<endl;
     free(z_old);
+	cout<<z[0];
 	cout<<"error12"<<endl;
 	
 }
@@ -407,7 +403,7 @@ extern "C" {
 	void ADMM_updatew_R(double *x, double *y, double *z, double *r, double *objective, int *groupLevel,int *genePos,double *coef, int *J, int *G, int *L){
 		cout<<"error-2"<<endl;
 		ADMM_updatew(x, y, z, r, objective, groupLevel, genePos, coef, *J, *G, *L);
-		
+		cout<<z[0];
 	}
 }
 
