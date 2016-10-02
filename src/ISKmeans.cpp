@@ -76,6 +76,7 @@ void updateX(double *x, double *y, double *z, int *groupLevel,int *genePos,doubl
 	
 	// agroupLen: group size of one group
 	int agroupLen;
+	double *a;
 	
 	// a: temp array to store results	
 	for(int g=1;g<=G;g++){
@@ -83,7 +84,7 @@ void updateX(double *x, double *y, double *z, int *groupLevel,int *genePos,doubl
 		while(groupLevel[curStart+agroupLen] == g){
 			agroupLen++;		
 		}		
-		double *a = (double*)malloc((agroupLen)*sizeof(double));		
+		a = (double*)malloc((agroupLen)*sizeof(double));		
 		for(int ap=0; ap<agroupLen; ap++){
 			curPos = curStart + ap;
 			a[ap] = coef[curPos] * z[genePos[curPos]] - y[curPos]/rho;
@@ -243,6 +244,7 @@ double updateR(double *x, double *z, int *groupLevel,int *genePos,double *coef, 
 	int curPos;
 	// agroupLen: group size of one group
 	int agroupLen;
+	double *a;
 	
 	for(int g=1;g<=G;g++){
 		agroupLen = 0;
@@ -250,7 +252,7 @@ double updateR(double *x, double *z, int *groupLevel,int *genePos,double *coef, 
 		while(groupLevel[curStart+agroupLen] == g){
 			agroupLen++;		
 		}
-		double *a = (double*)malloc((agroupLen)*sizeof(double));				
+		a = (double*)malloc((agroupLen)*sizeof(double));				
 		for(int ap=0; ap<agroupLen; ap++){
 			curPos = curStart + ap;
 			a[ap] = x[curPos] - coef[curPos] * z[genePos[curPos]];
@@ -270,6 +272,7 @@ double getObj(double *r,double *z,int J,int *groupLevel,int *genePos,double *coe
 	
 	int curStart = 0;
 	int curPos;
+	double *a;
 	
 	// agroupLen: group size of one group
 	int agroupLen;
@@ -280,7 +283,7 @@ double getObj(double *r,double *z,int J,int *groupLevel,int *genePos,double *coe
 			agroupLen++;		
 		}
 		
-		double *a = (double*)malloc((agroupLen)*sizeof(double));		
+		a = (double*)malloc((agroupLen)*sizeof(double));		
 		for(int ap=0; ap<agroupLen; ap++){
 			curPos = curStart + ap;
 			a[ap] = coef[curPos] * z[genePos[curPos]];
