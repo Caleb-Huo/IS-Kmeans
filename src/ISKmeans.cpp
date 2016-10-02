@@ -261,6 +261,7 @@ double updateR(double *x, double *z, int *groupLevel,int *genePos,double *coef, 
 		}
 		sumRP += l2n(a,agroupLen);
 		curStart += agroupLen;	
+		free(a);
 	}
 	return sumRP;
 }
