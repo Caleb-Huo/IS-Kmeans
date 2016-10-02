@@ -23,31 +23,31 @@ double l2nV(vector<double>& vec){
        return sqrt(accum);
 }
 
-double l2nDivision(double *numerator, double *denominator,int n){
+double l2nDivision(vector<double>& numerator, vector<double>& denominator){
   // calculate 	l2n((numerator+lambda)/(denominator+lambda));	
 	double sum2=0;
 	double ad;
-	for(int i=0;i<n;i++){
+	for(int i=0;i<numerator.size();i++){
 		ad = numerator[i]/denominator[i];
 		sum2 += ad*ad;
 	}
 	return sqrt(sum2);	
 }
 
-double l2nDivisionLambda(double *numerator, double *denominator, double lambda, int n){
+double l2nDivisionLambda(vector<double>& numerator, vector<double>& denominator, double lambda){
   // calculate 	l2n((numerator+lambda)/(denominator+lambda));	
 	double sum2=0;
 	double ad;
-	for(int i=0;i<n;i++){
+	for(int i=0;i<numerator.size();i++){
 		ad = numerator[i]/(denominator[i]+lambda);
 		sum2 += ad*ad;
 	}
 	return sqrt(sum2);	
 }
 
-double BinarySearch_ADMM(double *numerator, double *denominator,int n){
+double BinarySearch_ADMM(vector<double>& numerator, vector<double>& denominator){
   // find a number such that l2n((numerator+lambda)/(denominator+lambda)) = 1;
-  if(l2nDivision(numerator,denominator,n)<=1){
+  if(l2nDivision(numerator,denominator)<=1){
   	return 0;
   } 
   double stableE = 1.0/10000; 
@@ -68,7 +68,7 @@ double BinarySearch_ADMM(double *numerator, double *denominator,int n){
   double lam2 = sqrt(n) * maxNum - minDen + stableE;
   int iter = 0;
   while(iter<=20 && (lam2-lam1)>stableE){	  
-    su = l2nDivisionLambda(numerator, denominator, (lam1+lam2)/2, n);
+    su = l2nDivisionLambda(numerator, denominator, (lam1+lam2)/2);
     if(su<1){
       lam2 = (lam1+lam2)/2;
     } else {
@@ -136,19 +136,16 @@ void updateZ(double *x, double *y, double *z, double *r, int *groupLevel,int *ge
 	
 	// new double [totalLength]()
 	// a: temp array to store results
-    double *b = (double*)malloc(J*sizeof(double));
-    double *c = (double*)malloc(J*sizeof(double));
-	double *rplusc = (double*)malloc(J*sizeof(double));
-    int *nonzero = (int*)malloc(J*sizeof(int));
-	for(int j=0;j<J;j++){
-		nonzero[j] = j;
-	}
-
-	for(int j=0;j<J;j++){
-		b[j] = 0.0;
-		c[j] = 0.0;
-	}
+    std::vector<double> b(J, 0);
+    std::vector<double> c(J, 0);
+    std::vector<double> rplusc(J, 0);
+    std::vector<int> nonzero(J, 0);
 	
+    //double *b = (double*)malloc(J*sizeof(double));
+    //double *c = (double*)malloc(J*sizeof(double));
+	//double *rplusc = (double*)malloc(J*sizeof(double));
+    //int *nonzero = (int*)malloc(J*sizeof(int));
+
 	for(int g=1;g<=G;g++){
 		agroupLen = 0;
 		while(groupLevel[curStart+agroupLen] == g){
@@ -178,8 +175,11 @@ void updateZ(double *x, double *y, double *z, double *r, int *groupLevel,int *ge
 	}
 	*/
 
-    double *nonZeroNum = (double*)malloc(countSumTure*sizeof(double));
-    double *nonZeroDen = (double*)malloc(countSumTure*sizeof(double));
+    std::vector<double> nonZeroNum(countSumTure, 0);
+    std::vector<double> nonZeroDen(countSumTure, 0);
+
+    //double *nonZeroNum = (double*)malloc(countSumTure*sizeof(double));
+    //double *nonZeroDen = (double*)malloc(countSumTure*sizeof(double));
 	for(int j=0;j<J;j++){		
 		if(nonzero[j]){
 			nonZeroNum[nonZeroIndex] = rplusc[j];
@@ -190,7 +190,7 @@ void updateZ(double *x, double *y, double *z, double *r, int *groupLevel,int *ge
 		}
 	}
 	
-    double u = BinarySearch_ADMM(nonZeroNum, nonZeroDen,countSumTure);
+    double u = BinarySearch_ADMM(nonZeroNum, nonZeroDen);
 
 	nonZeroIndex = 0;
 	for(int j=0;j<J;j++){		
@@ -199,13 +199,14 @@ void updateZ(double *x, double *y, double *z, double *r, int *groupLevel,int *ge
 			nonZeroIndex++;			
 		}
 	}	
-	
+	/*
 	free(b);
 	free(c);
 	free(rplusc);
 	free(nonzero);
 	free(nonZeroNum);
 	free(nonZeroDen);	
+	*/
 }
 
 void updateZbyX(double *x, double *z, int *groupLevel,int *genePos,double *coef, int J, int G){
