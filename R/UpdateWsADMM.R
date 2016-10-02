@@ -32,6 +32,8 @@ UpdateWsADMM <- function(d, Cs, ws, currentY=NULL, groupInfo){
 	L = as.integer(L)
   )
   
+  print(ADMMobj$z)
+  
   ADMMobj$x <- NULL
   ADMMobj$r <- NULL
   
