@@ -21,7 +21,7 @@ UpdateWsADMM <- function(d, Cs, ws, currentY=NULL, groupInfo){
   stopifnot(L == length(coef))
   stopifnot(1:L == order(groupLevel))
   stopifnot(max(groupLevel) == G)
-  stopifnot(max(genePos) == J)
+  stopifnot(max(genePos) == J-1)
     
   if(is.null(currentY)) currentY<-numeric(L)
   
