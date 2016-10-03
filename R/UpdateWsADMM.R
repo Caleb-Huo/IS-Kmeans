@@ -12,12 +12,12 @@ UpdateWsADMM <- function(d, Cs, ws, currentY=NULL, groupInfo){
   genePos <- groupInfo$genePos - 1
   coef <- groupInfo$coef
   
-  assert(L == length(groupLevel))
-  assert(L == length(genePos))
-  assert(L == length(coef))
-  assert(1:L == order(groupLevel))
-  assert(max(groupLevel) == G)
-  assert(max(genePos) == J)
+  stopifnot(L == length(groupLevel))
+  stopifnot(L == length(genePos))
+  stopifnot(L == length(coef))
+  stopifnot(1:L == order(groupLevel))
+  stopifnot(max(groupLevel) == G)
+  stopifnot(max(genePos) == J)
     
   if(is.null(currentY)) currentY<-numeric(L)
   
