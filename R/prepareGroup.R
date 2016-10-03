@@ -11,10 +11,13 @@
 prepareGroup <- function(group, J, G0, gamma, alpha){  
   groupFeatureCounts <- numeric(J)
   for(g in 1:G0){
-  	groupFeatureCounts[group[[g]]] <- groupFeatureCounts[group[[g]]] + 1	
+  	groupFeatureCounts[group[[g]]] <- groupFeatureCounts[group[[g]]] + 1
+	print(sum(groupFeatureCounts))	
   }
-
+  print(J)	
+  print(sum(groupFeatureCounts))	
   L <- sum(groupFeatureCounts) + J
+  print(L)	
   groupLevel <- numeric(L)
   genePos <- numeric(L)
   coef <- numeric(L)
