@@ -73,7 +73,7 @@ double BinarySearch_ADMM(vector<double>& numerator, vector<double>& denominator)
   return (lam1+lam2)/2;
 }
 
-void updateX(double *x, double *y, double *z, int *groupLevel,int *genePos,double *coef, int J, int G, double rho){
+void updateX(double *x, double *y, double *z, int *groupLevel,int *genePos,double *coef, int J, int G, int L, double rho){
 	int curStart = 0;
 	int curPos;
 	double l2na;
@@ -402,7 +402,7 @@ void ADMM_updatew(double *x, double *y, double *z, double *r, double *objective,
 	while(!stopCrit){
 	    iter++;
 	    copyZ(z_old,z);
-		updateX(x, y, z, groupLevel,genePos,coef, J, G, rho);
+		updateX(x, y, z, groupLevel,genePos,coef, J, G, L, rho);
 		updateZ(x, y, z, r, groupLevel, genePos,coef, J, G, L, rho);
 		updateY(x,y,z,groupLevel,genePos,coef,G,rho);
 		
