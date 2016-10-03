@@ -96,13 +96,13 @@ void updateX(double *x, double *y, double *z, int *groupLevel,int *genePos,doubl
 		for(int ap=0; ap<agroupLen; ap++){
 			curPos = curStart + ap;
 			if(ap>=agroupLen){
-				cout<<"ap error"<<ap<<endl;				
+				cout<<"ap error 1"<<ap<<endl;				
 			}
 			if(curPos>=G){
-				cout<<"curPos error"<<curPos<<endl;				
+				cout<<"curPos error 2"<<curPos<<endl;				
 			}
 			if(genePos[curPos]>=J){
-				cout<<"genePos[curPos] error"<<genePos[curPos]<<endl;				
+				cout<<"genePos[curPos] error 3"<<genePos[curPos]<<endl;				
 			}			
 			a[ap] = coef[curPos] * z[genePos[curPos]] - y[curPos]/rho;
 		}
@@ -113,7 +113,7 @@ void updateX(double *x, double *y, double *z, int *groupLevel,int *genePos,doubl
 	    if(l2na*rho<=1){
 			for(int bp=curStart; bp<curStart+agroupLen; bp++){
 				if(bp>=G){
-					cout<<"bp error"<<bp<<endl;				
+					cout<<"bp error 4"<<bp<<endl;				
 				}			
 				x[bp] = 0;
 			}
@@ -121,7 +121,7 @@ void updateX(double *x, double *y, double *z, int *groupLevel,int *genePos,doubl
 			for(int ap=0; ap<agroupLen; ap++){
 				curPos = curStart + ap;			
 				if(curPos>=G){
-					cout<<"curPos error"<<curPos<<endl;				
+					cout<<"curPos error 5"<<curPos<<endl;				
 				}			
 				x[curPos] = (1-1/l2na/rho)*a[ap];
 			}			
