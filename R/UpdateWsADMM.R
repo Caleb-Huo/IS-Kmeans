@@ -12,6 +12,10 @@ UpdateWsADMM <- function(d, Cs, ws, currentY=NULL, groupInfo){
   genePos <- groupInfo$genePos - 1
   coef <- groupInfo$coef
   
+  print(L)
+  print(length(groupLevel))
+  print(table(groupLevel))
+  
   stopifnot(L == length(groupLevel))
   stopifnot(L == length(genePos))
   stopifnot(L == length(coef))
