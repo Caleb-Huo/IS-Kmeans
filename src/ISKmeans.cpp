@@ -87,8 +87,9 @@ void updateX(double *x, double *y, double *z, int *groupLevel,int *genePos,doubl
 		agroupLen = 0;
 		while(groupLevel[curStart+agroupLen] == g){
 			agroupLen++;		
-		}		
-		cout<<"agroupLen"<<agroupLen<<endl;
+		}
+		if(agroupLen==0)		
+			cout<<"agroupLen"<<agroupLen<<endl;
   	    std::vector<double> a(agroupLen, 0);
 		
 		//a = (double*)malloc((agroupLen)*sizeof(double));		
@@ -146,7 +147,8 @@ void updateZ(double *x, double *y, double *z, double *r, int *groupLevel,int *ge
 		while(groupLevel[curStart+agroupLen] == g){
 			agroupLen++;		
 		}		
-		cout<<"agroupLen"<<agroupLen<<endl;
+		if(agroupLen==0)		
+			cout<<"agroupLen"<<agroupLen<<endl;
 		
 		for(int bp=curStart; bp<curStart + agroupLen; bp++){
 			am = coef[bp];
@@ -218,7 +220,8 @@ void updateZbyX(double *x, double *z, int *groupLevel,int *genePos,double *coef,
 		while(groupLevel[curStart+agroupLen] == g){
 			agroupLen++;		
 		}		
-		cout<<"agroupLen"<<agroupLen<<endl;
+		if(agroupLen==0)		
+			cout<<"agroupLen"<<agroupLen<<endl;
 		
 		for(int bp=curStart; bp<curStart + agroupLen; bp++){
 			am = coef[bp];
@@ -241,7 +244,8 @@ void updateY(double *x, double *y, double *z, int *groupLevel,int *genePos,doubl
 		while(groupLevel[curStart+agroupLen] == g){
 			agroupLen++;		
 		}
-		cout<<"agroupLen"<<agroupLen<<endl;
+		if(agroupLen==0)		
+			cout<<"agroupLen"<<agroupLen<<endl;
 				
 		for(int bp=curStart; bp<curStart + agroupLen; bp++){
 			y[bp] += rho*(x[bp] - coef[bp] * z[genePos[bp]]);
@@ -264,7 +268,8 @@ double updateR(double *x, double *z, int *groupLevel,int *genePos,double *coef, 
 		while(groupLevel[curStart+agroupLen] == g){
 			agroupLen++;		
 		}
-		cout<<"agroupLen"<<agroupLen<<endl;
+		if(agroupLen==0)		
+			cout<<"agroupLen"<<agroupLen<<endl;
 		
   	    std::vector<double> a(agroupLen, 0);
 		
@@ -298,7 +303,8 @@ double getObj(double *r,double *z,int J,int *groupLevel,int *genePos,double *coe
 		while(groupLevel[curStart+agroupLen] == g){
 			agroupLen++;		
 		}
-		cout<<"agroupLen"<<agroupLen<<endl;
+		if(agroupLen==0)		
+			cout<<"agroupLen"<<agroupLen<<endl;
   	    
 		std::vector<double> a(agroupLen, 0);
 		
@@ -331,7 +337,8 @@ double getRd2(vector<double>& z_old,double *z,int *groupLevel,int *genePos,doubl
 		while(groupLevel[curStart+agroupLen] == g){
 			agroupLen++;		
 		}
-		cout<<"agroupLen"<<agroupLen<<endl;
+		if(agroupLen==0)		
+			cout<<"agroupLen"<<agroupLen<<endl;
 		
 		for(int ap=0; ap<agroupLen; ap++){
 			curPos = curStart + ap;
