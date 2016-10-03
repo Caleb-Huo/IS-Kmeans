@@ -401,9 +401,7 @@ void ADMM_updatew(double *x, double *y, double *z, double *r, double *objective,
 
 extern "C" {
 	void ADMM_updatew_R(double *x, double *y, double *z, double *r, double *objective, int *groupLevel,int *genePos,double *coef, int *J, int *G, int *L){
-		cout<<"error-2"<<endl;
 		ADMM_updatew(x, y, z, r, objective, groupLevel, genePos, coef, *J, *G, *L);
-		cout<<z[0];
 	}
 }
 
