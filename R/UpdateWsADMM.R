@@ -14,7 +14,7 @@ UpdateWsADMM <- function(d, Cs, ws, currentY=NULL, groupInfo){
   
   print(L)
   print(length(groupLevel))
-  print(table(groupLevel))
+  #print(table(groupLevel))
   
   stopifnot(L == length(groupLevel))
   stopifnot(L == length(genePos))
