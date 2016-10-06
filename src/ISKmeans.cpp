@@ -249,7 +249,7 @@ void updateZbyX(double *x, double *z, int *groupLevel,int *genePos,double *coef,
 			geneCurPos = genePos[bp];
 			
 			if(am!=0){
-				amAllZero[j] = 0;
+				amAllZero[geneCurPos] = 0;
 				if(x[bp]!=0){
 					markZtoZero[geneCurPos] = 1;
 				} 				
