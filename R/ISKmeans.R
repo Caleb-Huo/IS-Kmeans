@@ -101,7 +101,7 @@ function(d, K=NULL, gamma=NULL, alpha=0.5, group=NULL, nstart=20, wsPre=NULL ,sp
 	  agamma <- gamma[i]
 
 	  ws.old <- rnorm(J)
-	  ws <- iniws
+	  ws <- wsPre
 	  niter <- 0
 	  currentY <- NULL
 
@@ -113,6 +113,7 @@ function(d, K=NULL, gamma=NULL, alpha=0.5, group=NULL, nstart=20, wsPre=NULL ,sp
 	    ws.old <- ws
 		if(sum(ws!=0)<1){
 			nonTrivialFlag<-0
+			wsPre <- iniws
 			objective <- 0
 			obj0 <- 0
 			break
