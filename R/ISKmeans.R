@@ -93,7 +93,7 @@ function(d, K=NULL, gamma=NULL, alpha=0.5, group=NULL, nstart=20, wsPre=NULL ,sp
     Cs <- kmeans(d, centers=K, nstart=nstart)$cluster
 	iniws <- rep(1/sqrt(J),J)
   }
-
+  wsPre <- iniws
 
   ## iteratively update CS, WS
   out <- replicate(length(gamma),list())
