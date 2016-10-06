@@ -233,6 +233,8 @@ void updateZbyX(double *x, double *z, int *groupLevel,int *genePos,double *coef,
 	// agroupLen: group size of one group
 	int agroupLen;
 			
+    std::vector<int> markZtoZero(J, 0);
+	
 	for(int g=1;g<=G;g++){
 		agroupLen = 0;
 		while(groupLevel[curStart+agroupLen] == g){
@@ -244,12 +246,16 @@ void updateZbyX(double *x, double *z, int *groupLevel,int *genePos,double *coef,
 		for(int bp=curStart; bp<curStart + agroupLen; bp++){
 			am = coef[bp];
 			geneCurPos = genePos[bp];
-			if(am!=0 && x[bp]==0){
-				z[geneCurPos] = 0;
+			if(am!=0 && x[bp]!=0){
+				markZtoZero[geneCurPos] = 1;
 			} 
-		}
+		}				
 		curStart += agroupLen;
 	}
+	for(in j=0;j<J;j++){
+		if(markZtoZero[j]==0)
+			z[j] = 0;		
+	}	
 }
 
 void updateY(double *x, double *y, double *z, int *groupLevel,int *genePos,double *coef, int G, double rho){
