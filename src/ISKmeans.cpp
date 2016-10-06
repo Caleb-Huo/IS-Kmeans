@@ -252,7 +252,7 @@ void updateZbyX(double *x, double *z, int *groupLevel,int *genePos,double *coef,
 		}				
 		curStart += agroupLen;
 	}
-	for(in j=0;j<J;j++){
+	for(int j=0;j<J;j++){
 		if(markZtoZero[j]==0)
 			z[j] = 0;		
 	}	
