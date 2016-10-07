@@ -49,6 +49,8 @@ prepareGroup <- function(group, J, G0, gamma, alpha){
 	
   } else if(alpha==1){
 	  J0 = J
+
+	  L <- J
 	  groupLevel <- numeric(J)
 	  genePos <- numeric(J)
 	  coef <- numeric(J)  	
