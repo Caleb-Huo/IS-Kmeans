@@ -123,7 +123,7 @@ function(d, K=NULL, gamma=NULL, alpha=0.5, group=NULL, nstart=20, wsPre=NULL ,sp
 	 	if(!silent) cat('Updating WS...\n', fill=FALSE)
 		if(is.null(groupInfo)){
 			wcss=GetWCSS(d, Cs)
-			ws <- r/sqrt(sum(r^2))
+			ws <- wcss$r/sqrt(sum(wcss$r^2))
 			wsPre <- ws
 			objective <- - sum(ws * wcss$r)
 			obj0 <-  - sum(ws * wcss$r)			
