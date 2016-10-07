@@ -122,6 +122,7 @@ function(d, K=NULL, gamma=NULL, alpha=0.5, group=NULL, nstart=20, wsPre=NULL ,sp
 	    if(niter>1) Cs <- UpdateCs(d, K, ws, Cs) # if niter=1, no need to update!!
 	 	if(!silent) cat('Updating WS...\n', fill=FALSE)
 		if(is.null(groupInfo)){
+			nonTrivialFlag<-0			
 			wcss=GetWCSS(d, Cs)
 			ws <- wcss$r/sqrt(sum(wcss$r^2))
 			wsPre <- ws
