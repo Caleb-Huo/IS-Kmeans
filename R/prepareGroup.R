@@ -23,7 +23,7 @@ prepareGroup <- function(group, J, G0, gamma, alpha){
   preCoef <- gamma * (1 - alpha)
   
   if(alpha==0){
-	  J0logic <- groupFeatureCounts!=0
+	  J0logic <- groupFeatureCounts==0
 	  J0 = sum(J0logic)
   	
 	  L <- sum(groupFeatureCounts) + J0
