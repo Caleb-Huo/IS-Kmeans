@@ -106,9 +106,9 @@ function(d, K=NULL, gamma=NULL, alpha=0.5, group=NULL, nstart=20, wsPre=NULL ,sp
 	  currentY <- NULL
 
 	  nonTrivialFlag = 1
-      groupInfo <- prepareGroup(group, J, G0, agamma, alpha)
 	  while((sum(abs(ws-ws.old))/sum(abs(ws.old)))>1e-4 && niter<maxiter){
 	    if(!silent) cat('Iteration',niter, ':\n', fill=FALSE)
+  	    groupInfo <- prepareGroup(group, J, G0, agamma, alpha, ws)
 	    niter <- niter+1
 	    ws.old <- ws
 		if(sum(ws!=0)<1){
