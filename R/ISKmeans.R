@@ -128,10 +128,13 @@ function(d, K=NULL, gamma=NULL, alpha=0.5, group=NULL, nstart=20, wsPre=NULL ,sp
 			wsPre <- ws
 			objective <- - sum(ws * wcss$r)
 			obj0 <-  - sum(ws * wcss$r)			
+			print(objective)
 		} else {
 			ADMMobject <- UpdateWsADMM(d, Cs, ws, currentY=currentY, groupInfo)
 			ws <- ADMMobject$z
-			currentY <- ADMMobject$currentY			
+			currentY <- ADMMobject$currentY	
+			print(ADMMobject$objective)
+					
 		}
 	  }
 
