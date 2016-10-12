@@ -226,6 +226,7 @@ void updateZ(double *x, double *y, double *z, double *r, int *groupLevel,int *ge
 	*/
 }
 
+/*
 void updateZbyX(double *x, double *z, int *groupLevel,int *genePos,double *coef, int J, int G){
 	int curStart = 0;
 	double am;
@@ -262,6 +263,41 @@ void updateZbyX(double *x, double *z, int *groupLevel,int *genePos,double *coef,
 			z[j] = 0;		
 	}	
 }
+*/
+
+
+void updateZbyX(double *x, double *z, int *groupLevel,int *genePos,double *coef, int J, int G){
+	int curStart = 0;
+	double am;
+	int geneCurPos;
+	// agroupLen: group size of one group
+	int agroupLen;
+			
+    std::vector<int> markZtoZero(J, 0);
+	
+	for(int g=1;g<=G;g++){
+		agroupLen = 0;
+		while(groupLevel[curStart+agroupLen] == g){
+			agroupLen++;		
+		}		
+		if(agroupLen==0)		
+			cout<<"agroupLen"<<agroupLen<<endl;
+		
+		for(int bp=curStart; bp<curStart + agroupLen; bp++){
+			geneCurPos = genePos[bp];
+			
+			if(x[bp]==0){
+				markZtoZero[geneCurPos] = 1;
+			}
+		}				
+		curStart += agroupLen;
+	}
+	for(int j=0;j<J;j++){
+		if(markZtoZero[j]==1)
+			z[j] = 0;		
+	}	
+}
+
 
 void updateY(double *x, double *y, double *z, int *groupLevel,int *genePos,double *coef, int G, double rho){
 	int curStart = 0;
@@ -439,6 +475,8 @@ void ADMM_updatew(double *x, double *y, double *z, double *r, double *objective,
 	
 	// update z by x
 	updateZbyX(x, z, groupLevel, genePos, coef, J, G);
+	updateX(x, y, z, groupLevel,genePos,coef, J, G, L, rho);
+	updateZ(x, y, z, r, groupLevel, genePos,coef, J, G, L, rho);	
     //free(z_old);
 	
 }
