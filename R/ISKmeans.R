@@ -105,7 +105,8 @@ function(d, K=NULL, gamma=NULL, alpha=0.5, group=NULL, nstart=20, wsPre=NULL ,sp
    	ADMMobjectIni <- updateISKmeans(d, K, groupInfoIni, Cs, wsPre)
 	cat('initilizaing groups\n')
     groupInfo <- prepareGroup(group, J, G0, agamma, alpha, ADMMobjectIni$ws)
-
+	print(table(groupInfo$coef))
+	print(table(groupInfo$L))
 	ADMMobject <- updateISKmeans(d, K, groupInfo, ADMMobjectIni$Cs, ADMMobjectIni$ws)
 	out[[i]] <- ADMMobject
   }
