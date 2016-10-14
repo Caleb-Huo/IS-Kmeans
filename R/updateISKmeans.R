@@ -1,4 +1,4 @@
-updateISKmeans <- function(d, K, groupInfo, Cs, ws, silent=silent, maxiter=maxiter){
+updateISKmeans <- function(d, K, .groupInfo, Cs, ws, silent=silent, maxiter=maxiter){
   J <- ncol(d)
   ws.old <- rnorm(J)
   nonTrivialFlag = 1
@@ -22,7 +22,7 @@ cat('initilizaing results using alpha = 1, step 3\n')
 	if(!silent) cat('Updating CS...\n', fill=FALSE)
     if(niter>1) Cs <- UpdateCs(d, K, ws, Cs) # if niter=1, no need to update!!
  	if(!silent) cat('Updating WS...\n', fill=FALSE)
-	if(is.null(groupInfo)){
+	if(is.null(.groupInfo)){
 		nonTrivialFlag<-0			
 		wcss=GetWCSS(d, Cs)
 		ws <- wcss$r/sqrt(sum(wcss$r^2))
@@ -31,7 +31,7 @@ cat('initilizaing results using alpha = 1, step 3\n')
 		obj0 <-  - sum(ws * wcss$r)			
 		print(objective)
 	} else {
-		ADMMobject <- UpdateWsADMM(d, Cs, ws, currentY=currentY, groupInfo)
+		ADMMobject <- UpdateWsADMM(d, Cs, ws, currentY=currentY, .groupInfo)
 		ws <- ADMMobject$z
 		currentY <- ADMMobject$currentY	
 		print(ADMMobject$objective)
@@ -48,6 +48,6 @@ cat('initilizaing results using alpha = 1, step 3\n')
 	  ## original implementation
 	  ## BIC <- (n - 1) * sum(ws * wcss$r) - log(n) * sum(ws)	  	
   }
-  res <- list(ws=ws, Cs=Cs, obj0 = obj0, objective=objective, gamma=groupInfo$gamma,alpha=groupInfo$alpha)	  
+  res <- list(ws=ws, Cs=Cs, obj0 = obj0, objective=objective, gamma=.groupInfo$gamma,alpha=.groupInfo$alpha)	  
   return(res)
 }
