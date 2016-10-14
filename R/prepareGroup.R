@@ -75,7 +75,7 @@ prepareGroup <- function(group, J, G0, gamma, alpha, ws){
 
 	  for(g in 1:G0){
 		  agroup <- group[[g]]
-		  aws <- ws[agroup]		  
+		  aws <- ws[agroup]
 		  alen <- length(agroup)
 		  endPos <- curPos + alen - 1
 		  groupLevel[curPos:endPos] <- g
@@ -84,7 +84,7 @@ prepareGroup <- function(group, J, G0, gamma, alpha, ws){
 		  agroupPenalty <- max(sum(a_inv_groupFeatureCounts[aws!=0]),1)
 		  cat(agroupPenalty)
 		  cat(' ')
-		  coef[curPos:endPos] <- preCoef*sqrt(a_inv_groupFeatureCounts)*sqrt(sum(a_inv_groupFeatureCounts))
+		  coef[curPos:endPos] <- preCoef*sqrt(a_inv_groupFeatureCounts)*sqrt(agroupPenalty)
 		  curPos <- curPos + alen
 	  }  	
 	  cat('\n')
