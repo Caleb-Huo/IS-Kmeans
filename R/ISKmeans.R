@@ -101,7 +101,7 @@ function(d, K=NULL, gamma=NULL, alpha=0.5, group=NULL, nstart=20, wsPre=NULL ,sp
 	agamma <- gamma[i]
 
 	cat('initilizaing results using alpha = 1\n')
-	groupInfoIni <- prepareGroup(group, J, G0, agamma, alpha, wsPre)
+	groupInfoIni <- prepareGroup(group, J, G0, agamma, 1, wsPre)
    	ADMMobjectIni <- updateISKmeans(d, K, groupInfoIni, Cs, wsPre)
 	cat('initilizaing groups\n')
     groupInfo <- prepareGroup(group, J, G0, agamma, alpha, ADMMobjectIni$ws)
