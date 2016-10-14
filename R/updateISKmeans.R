@@ -1,4 +1,4 @@
-updateISKmeans <- function(d, K, groupInfo, Cs, ws, silent=TRUE, maxiter=20){
+updateISKmeans <- function(d, K, groupInfo, Cs, ws, silent=FALSE, maxiter=20){
   J <- ncol(d)
   ws.old <- rnorm(J)
   nonTrivialFlag = 1
