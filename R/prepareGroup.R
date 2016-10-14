@@ -96,6 +96,6 @@ prepareGroup <- function(group, J, G0, gamma, alpha, ws){
 	  coef[curPos:endPos][groupFeatureCounts==0] <- gamma  	 
   }  
 
-  groupInfo <- list(groupLevel=groupLevel, genePos=genePos, coef=coef, L=L, G=G0+J0 ,J=J)
+  groupInfo <- list(groupLevel=groupLevel, genePos=genePos, coef=coef, L=L, G=G0+J0 ,J=J, alpha=alpha, gamma=gamma)
   return(groupInfo)
 }

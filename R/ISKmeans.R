@@ -59,7 +59,7 @@
 ##' iRes <- ISKmeans(d, K=3, gamma=0.5, alpha=0.5, group=group)
 ##'
 ISKmeans <-
-function(d, K=NULL, gamma=NULL, alpha=0.5, group=NULL, nstart=20, wsPre=NULL ,sparseStart=TRUE ,silent=FALSE, maxiter=6){
+function(d, K=NULL, gamma=NULL, alpha=0.5, group=NULL, nstart=20, wsPre=NULL ,sparseStart=TRUE ,silent=FALSE, maxiter=20){
   # The criterion is : minimize_{w, C} sum_j w_j (R_j) + gamma_1*\sum_group penalty + gamma_2*||w||_1 s.t. ||w||_2=1, w_j>=0
   # x is the data, nxp
   # K is the number of clusters desired
@@ -102,59 +102,12 @@ function(d, K=NULL, gamma=NULL, alpha=0.5, group=NULL, nstart=20, wsPre=NULL ,sp
 
 	cat('initilizaing results using alpha = 1\n')
 	groupInfoIni <- prepareGroup(group, J, G0, agamma, alpha, wsPre)
-   	ADMMobjectIni <- UpdateWsADMM(d, Cs, wsPre, currentY=NULL, groupInfoIni)
-	ws <- ADMMobjectIni$z
-	currentY <- ADMMobjectIni$currentY	
+   	ADMMobjectIni <- updateISKmeans(d, K, groupInfoIni, Cs, wsPre)
 	cat('initilizaing groups\n')
-    groupInfo <- prepareGroup(group, J, G0, agamma, alpha, ws)
+    groupInfo <- prepareGroup(group, J, G0, agamma, alpha, ADMMobjectIni$ws)
 
-	ws.old <- rnorm(J)
-	niter <- 0
-
-	nonTrivialFlag = 1
-	  while((sum(abs(ws-ws.old))/sum(abs(ws.old)))>1e-4 && niter<maxiter){
-	    if(!silent) cat('Iteration',niter, ':\n', fill=FALSE)
-	    niter <- niter+1
-	    ws.old <- ws
-		if(sum(ws!=0)<1){
-			nonTrivialFlag<-0
-			wsPre <- iniws
-			objective <- 0
-			obj0 <- 0
-			break
-		}
-		if(!silent) cat('Updating CS...\n', fill=FALSE)
-	    if(niter>1) Cs <- UpdateCs(d, K, ws, Cs) # if niter=1, no need to update!!
-	 	if(!silent) cat('Updating WS...\n', fill=FALSE)
-		if(is.null(groupInfo)){
-			nonTrivialFlag<-0			
-			wcss=GetWCSS(d, Cs)
-			ws <- wcss$r/sqrt(sum(wcss$r^2))
-			wsPre <- ws
-			objective <- - sum(ws * wcss$r)
-			obj0 <-  - sum(ws * wcss$r)			
-			print(objective)
-		} else {
-			ADMMobject <- UpdateWsADMM(d, Cs, ws, currentY=currentY, groupInfo)
-			ws <- ADMMobject$z
-			currentY <- ADMMobject$currentY	
-			print(ADMMobject$objective)
-					
-		}
-	  }
-
-	  if(nonTrivialFlag){
-		  ##ws[ws<sum(ws)/ncol(d)] <- 0
-		  Cs <- UpdateCs(d, K, ws, Cs)
-		  wcss=GetWCSS(d, Cs)
-		  wsPre <- ws
-		  objective = ADMMobject$objective
-		  obj0 <-  - sum(ws * wcss$r)
-		  ## original implementation
-		  ## BIC <- (n - 1) * sum(ws * wcss$r) - log(n) * sum(ws)	  	
-	  }
-	  out[[i]] <- list(ws=ws, Cs=Cs, obj0 = obj0, objective=objective, gamma=agamma,alpha=alpha)
-
+	ADMMobject <- updateISKmeans(d, K, groupInfo, ADMMobjectIni$Cs, ADMMobjectIni$ws)
+	out[[i]] <- ADMMobject
   }
 
   if(length(gamma)==1) out <- out[[i]]
