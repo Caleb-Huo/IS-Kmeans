@@ -102,7 +102,7 @@ function(d, K=NULL, gamma=NULL, alpha=0.5, group=NULL, nstart=20, wsPre=NULL ,sp
 
 	cat('initilizaing results using alpha = 1\n')
 	groupInfoIni <- prepareGroup(group, J, G0, agamma, alpha, wsPre)
-   	ADMMobjectIni <- UpdateWsADMM(d, Cs, ws, currentY=NULL, groupInfoIni)
+   	ADMMobjectIni <- UpdateWsADMM(d, Cs, wsPre, currentY=NULL, groupInfoIni)
 	ws <- ADMMobjectIni$z
 	currentY <- ADMMobjectIni$currentY	
 	cat('initilizaing groups\n')
