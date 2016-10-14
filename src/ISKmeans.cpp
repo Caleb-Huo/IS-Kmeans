@@ -474,7 +474,7 @@ void ADMM_updatew(double *x, double *y, double *z, double *r, double *objective,
 	}
 	
 	// update z by x
-	//updateZbyX(x, z, groupLevel, genePos, coef, J, G);
+	updateZbyX(x, z, groupLevel, genePos, coef, J, G);
 	//updateX(x, y, z, groupLevel,genePos,coef, J, G, L, rho);
 	//updateZ(x, y, z, r, groupLevel, genePos,coef, J, G, L, rho);	
     //free(z_old);
