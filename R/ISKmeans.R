@@ -100,10 +100,12 @@ function(d, K=NULL, gamma=NULL, alpha=0.5, group=NULL, nstart=20, wsPre=NULL ,sp
   for(i in 1:length(gamma)){
 	agamma <- gamma[i]
 
+	cat('initilizaing results using alpha = 1\n')
 	groupInfoIni <- prepareGroup(group, J, G0, agamma, alpha, wsPre)
    	ADMMobjectIni <- UpdateWsADMM(d, Cs, ws, currentY=NULL, groupInfoIni)
-	ws <- ADMMobject$z
-	currentY <- ADMMobject$currentY	
+	ws <- ADMMobjectIni$z
+	currentY <- ADMMobjectIni$currentY	
+	cat('initilizaing groups\n')
     groupInfo <- prepareGroup(group, J, G0, agamma, alpha, ws)
 
 	ws.old <- rnorm(J)
