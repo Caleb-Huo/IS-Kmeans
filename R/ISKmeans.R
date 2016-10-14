@@ -98,17 +98,20 @@ function(d, K=NULL, gamma=NULL, alpha=0.5, group=NULL, nstart=20, wsPre=NULL ,sp
   ## iteratively update CS, WS
   out <- replicate(length(gamma),list())
   for(i in 1:length(gamma)){
-	  agamma <- gamma[i]
+	agamma <- gamma[i]
 
-	  ws.old <- rnorm(J)
-	  ws <- wsPre
-	  niter <- 0
-	  currentY <- NULL
+	groupInfoIni <- prepareGroup(group, J, G0, agamma, alpha, wsPre)
+   	ADMMobjectIni <- UpdateWsADMM(d, Cs, ws, currentY=NULL, groupInfoIni)
+	ws <- ADMMobject$z
+	currentY <- ADMMobject$currentY	
+    groupInfo <- prepareGroup(group, J, G0, agamma, alpha, ws)
 
-	  nonTrivialFlag = 1
+	ws.old <- rnorm(J)
+	niter <- 0
+
+	nonTrivialFlag = 1
 	  while((sum(abs(ws-ws.old))/sum(abs(ws.old)))>1e-4 && niter<maxiter){
 	    if(!silent) cat('Iteration',niter, ':\n', fill=FALSE)
-  	    groupInfo <- prepareGroup(group, J, G0, agamma, alpha, ws)
 	    niter <- niter+1
 	    ws.old <- ws
 		if(sum(ws!=0)<1){
