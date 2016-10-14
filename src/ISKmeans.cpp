@@ -430,7 +430,7 @@ double getError(vector<double>& z_old,double *z, int J){
 void ADMM_updatew(double *x, double *y, double *z, double *r, double *objective, int *groupLevel,int *genePos,double *coef, int J, int G, int L){
     bool stopCrit = false;
     int iter = 0;
-	double error1 = 1.0/100000;
+	double error1 = 1.0/10000000000;
 	int maxiterADMM = 1000;
 	
 	std::vector<double> z_old(z, z+J);
