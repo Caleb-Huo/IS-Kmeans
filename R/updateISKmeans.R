@@ -4,6 +4,7 @@ updateISKmeans <- function(d, K, groupInfo, Cs, ws, silent=silent, maxiter=maxit
   nonTrivialFlag = 1
   niter <- 0
   currentY <- NULL
+cat('initilizaing results using alpha = 1, step 3\n')
 	
   while((sum(abs(ws-ws.old))/sum(abs(ws.old)))>1e-4 && niter<maxiter){
     if(!silent) cat('Iteration',niter, ':\n', fill=FALSE)
@@ -16,6 +17,8 @@ updateISKmeans <- function(d, K, groupInfo, Cs, ws, silent=silent, maxiter=maxit
 		obj0 <- 0
 		break
 	}
+	cat('initilizaing results using alpha = 1, step 4\n')
+	
 	if(!silent) cat('Updating CS...\n', fill=FALSE)
     if(niter>1) Cs <- UpdateCs(d, K, ws, Cs) # if niter=1, no need to update!!
  	if(!silent) cat('Updating WS...\n', fill=FALSE)
