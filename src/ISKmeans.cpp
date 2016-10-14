@@ -473,6 +473,9 @@ void ADMM_updatew(double *x, double *y, double *z, double *r, double *objective,
 	    if( (sumRP<error1 && sumDP<error1) || iter>maxiterADMM) stopCrit = true;		
 	}
 	
+	for(int j=0;j<J;j++){
+		z[j] = (z[j]>1.0/1000000) ? z[j] : 0;
+	}
 	// update z by x
 	//updateZbyX(x, z, groupLevel, genePos, coef, J, G);
 	//updateX(x, y, z, groupLevel,genePos,coef, J, G, L, rho);
