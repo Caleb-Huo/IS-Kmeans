@@ -1,18 +1,18 @@
-updateISKmeans <- function(d, K, .groupInfo, Cs, ws, silent=silent, maxiter=maxiter){
+updateISKmeans <- function(d, K, groupInfo, Css, wss, silent=silent, maxiter=maxiter){
   J <- ncol(d)
-  ws.old <- rnorm(J)
+  wss.old <- rnorm(J)
   nonTrivialFlag = 1
   niter <- 0
   currentY <- NULL
 cat('initilizaing results using alpha = 1, step 3\n')
 	
-  while((sum(abs(ws-ws.old))/sum(abs(ws.old)))>1e-4 && niter<maxiter){
+  while((sum(abs(wss-wss.old))/sum(abs(wss.old)))>1e-4 && niter<maxiter){
     if(!silent) cat('Iteration',niter, ':\n', fill=FALSE)
     niter <- niter+1
-    ws.old <- ws
-	if(sum(ws!=0)<1){
+    wss.old <- wss
+	if(sum(wss!=0)<1){
 		nonTrivialFlag<-0
-		wsPre <- ws
+		wssPre <- wss
 		objective <- 0
 		obj0 <- 0
 		break
@@ -20,34 +20,34 @@ cat('initilizaing results using alpha = 1, step 3\n')
 	cat('initilizaing results using alpha = 1, step 4\n')
 	
 	if(!silent) cat('Updating CS...\n', fill=FALSE)
-    if(niter>1) Cs <- UpdateCs(d, K, ws, Cs) # if niter=1, no need to update!!
+    if(niter>1) Css <- UpdateCss(d, K, wss, Css) # if niter=1, no need to update!!
  	if(!silent) cat('Updating WS...\n', fill=FALSE)
-	if(is.null(.groupInfo)){
+	if(is.null(groupInfo)){
 		nonTrivialFlag<-0			
-		wcss=GetWCSS(d, Cs)
-		ws <- wcss$r/sqrt(sum(wcss$r^2))
-		wsPre <- ws
-		objective <- - sum(ws * wcss$r)
-		obj0 <-  - sum(ws * wcss$r)			
+		wcss=GetWCSS(d, Css)
+		wss <- wcss$r/sqrt(sum(wcss$r^2))
+		wssPre <- wss
+		objective <- - sum(wss * wcss$r)
+		obj0 <-  - sum(wss * wcss$r)			
 		print(objective)
 	} else {
-		ADMMobject <- UpdateWsADMM(d, Cs, ws, currentY=currentY, .groupInfo)
-		ws <- ADMMobject$z
+		ADMMobject <- UpdateWsADMM(d, Css, wss, currentY=currentY, groupInfo)
+		wss <- ADMMobject$z
 		currentY <- ADMMobject$currentY	
 		print(ADMMobject$objective)
 				
 	}
   }
   if(nonTrivialFlag){
-	  ##ws[ws<sum(ws)/ncol(d)] <- 0
-	  Cs <- UpdateCs(d, K, ws, Cs)
-	  wcss=GetWCSS(d, Cs)
-	  wsPre <- ws
+	  ##wss[wss<sum(wss)/ncol(d)] <- 0
+	  Css <- UpdateCss(d, K, wss, Css)
+	  wcss=GetWCSS(d, Css)
+	  wssPre <- wss
 	  objective = ADMMobject$objective
-	  obj0 <-  - sum(ws * wcss$r)
+	  obj0 <-  - sum(wss * wcss$r)
 	  ## original implementation
-	  ## BIC <- (n - 1) * sum(ws * wcss$r) - log(n) * sum(ws)	  	
+	  ## BIC <- (n - 1) * sum(wss * wcss$r) - log(n) * sum(wss)	  	
   }
-  res <- list(ws=ws, Cs=Cs, obj0 = obj0, objective=objective, gamma=.groupInfo$gamma,alpha=.groupInfo$alpha)	  
+  res <- list(wss=wss, Css=Css, obj0 = obj0, objective=objective, gamma=groupInfo$gamma,alpha=groupInfo$alpha)	  
   return(res)
 }
