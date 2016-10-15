@@ -87,6 +87,8 @@ function(d,K=3,B=10,gamma=NULL,alpha=1, group=NULL,seed=15213,silence=FALSE){
 
   gapStat <- score - E.score
 
-  result <- data.frame(gamma, score, E.score, se.score, gapStat,numF=numF)
+  stat <- data.frame(gamma, score, E.score, se.score, gapStat,numF=numF)
+  bestGamma <- gamma[min(gapStat)]
+  result <- list(stat=stat, bestGamma=bestGamma)
   return(result)
 }
