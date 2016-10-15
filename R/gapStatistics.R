@@ -63,7 +63,6 @@ function(d,K=3,B=10,gamma=NULL,alpha=1, group=NULL,seed=15213,silence=FALSE){
   numF <- sapply(trueRes,function(x) sum(x$ws!=0))
   nGamma <- sapply(trueRes,function(x) x$gamma)
   score <- sapply(trueRes,function(x) x$obj0)
-  groupInfos <- lapply(trueRes,function(x) x$groupInfo)
   
   if (!silence)
      cat("calculating permutated score, b = 1,2,..., B (= ", B, ")  [one \".\" per sample]:\n", sep = "")
@@ -74,7 +73,7 @@ function(d,K=3,B=10,gamma=NULL,alpha=1, group=NULL,seed=15213,silence=FALSE){
 
 	  set.seed(15213+b)
       ad = t(apply(d,1,function(x) sample(x)))
-	  permRes <- ISKmeans(ad,K=K,gamma=gamma,alpha=alpha,group=group,penaltyInfo=groupInfos,silent=TRUE)
+	  permRes <- ISKmeans(ad,K=K,gamma=gamma,alpha=alpha,group=group,silent=TRUE)
 	  scoreperm <- sapply(permRes,function(x) x$obj0)
 	  E.score.full <- rbind(E.score.full, scoreperm)
   }
