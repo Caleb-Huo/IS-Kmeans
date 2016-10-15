@@ -46,6 +46,6 @@ updateISKmeans <- function(d, K, groupInfo, Cs, ws, silent=FALSE, maxiter=20){
 	  ## original implementation
 	  ## BIC <- (n - 1) * sum(ws * wcss$r) - log(n) * sum(ws)	  	
   }
-  res <- list(ws=ws, Cs=Cs, obj0 = obj0, objective=objective, gamma=groupInfo$gamma,alpha=groupInfo$alpha)	  
+  res <- list(ws=ws, Cs=Cs, obj0 = obj0, objective=objective, groupInfo=groupInfo)	  
   return(res)
 }

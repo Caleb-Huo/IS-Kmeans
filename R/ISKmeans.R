@@ -9,6 +9,7 @@
 ##' @param group Prior group information. Potentially these group can contain overlap features. group is a list and each element of the list is feature index.
 ##' @param nstart Number of initials for Kmeans for sparse Kmeans
 ##' @param wsPre Initial feature weight.
+##' @param penaltyInfo only for the purpose of gap statitics. Here we will fix the penalty design to perform gap statistics. The input should be a list of groupInfo. See groupInfo for details.
 ##' @param sparseStart Use Sparse Kmeans to do initialization.
 ##' @param silent Output progress.
 ##' @param maxiter Maximum numbre of iteration between ws and Cs.
@@ -17,9 +18,8 @@
 ##' \item{ws}{weight for each feature. Zero weight means the feature is not selected.}
 ##' \item{Cs}{Cluster Assignment}
 ##' \item{objective}{objective value}
-##' \item{BIC}{BIC, used for tuning parameter selection.}
-##' \item{gamma}{gamma parameter for the list}
-##' item{alpha}{alpha parameter for the list}
+##' \item{obj0}{sum of weighted separation ability. This term is for the purpose of gap statistics.}
+##' \item{groupInfo}{a list containing group design, alpha, gamma}
 ##' @export
 ##' @author Caleb
 ##' @examples
@@ -59,7 +59,7 @@
 ##' iRes <- ISKmeans(d, K=3, gamma=0.5, alpha=0.5, group=group)
 ##'
 ISKmeans <-
-function(d, K=NULL, gamma=NULL, alpha=0.5, group=NULL, nstart=20, wsPre=NULL ,sparseStart=TRUE ,silent=FALSE, maxiter=20){
+function(d, K=NULL, gamma=NULL, alpha=0.5, group=NULL, nstart=20, wsPre=NULL ,penaltyInfo=NULL ,sparseStart=TRUE ,silent=FALSE, maxiter=20){
   # The criterion is : minimize_{w, C} sum_j w_j (R_j) + gamma_1*\sum_group penalty + gamma_2*||w||_1 s.t. ||w||_2=1, w_j>=0
   # x is the data, nxp
   # K is the number of clusters desired
@@ -72,6 +72,11 @@ function(d, K=NULL, gamma=NULL, alpha=0.5, group=NULL, nstart=20, wsPre=NULL ,sp
 
   ## check the input variables are complete.
   # wbounds is a vector of L1 constraints on w, of the form  sum(abs(w))<=wbounds[i]
+  if(!is.null(penaltyInfo)){
+	  if(!(length(gamma) == length(penaltyInfo))){
+		  stop('gamma and penaltyInfo must have the same length.')
+	  }
+  }
   if(is.null(K)) stop("Must provide either K or centers.")
 
   ## obtain basic information
@@ -99,13 +104,18 @@ function(d, K=NULL, gamma=NULL, alpha=0.5, group=NULL, nstart=20, wsPre=NULL ,sp
   out <- replicate(length(gamma),list())
   for(i in 1:length(gamma)){
 	agamma <- gamma[i]
-
-	cat('initilizaing results using alpha = 1\n')
-	groupInfoIni <- prepareGroup(group, J, G0, agamma, 1, wsPre)
-   	ADMMobjectIni <- updateISKmeans(d, K, groupInfoIni, Cs, wsPre)
-	cat('initilizaing groups\n')
-    groupInfo <- prepareGroup(group, J, G0, agamma, alpha, ADMMobjectIni$ws)
-	ADMMobject <- updateISKmeans(d, K, groupInfo, ADMMobjectIni$Cs, ADMMobjectIni$ws)
+	if(is.null(penaltyInfo)){
+		cat('initilizaing results using alpha = 1\n')
+		groupInfoIni <- prepareGroup(group, J, G0, agamma, 1, wsPre)
+	   	ADMMobjectIni <- updateISKmeans(d, K, groupInfoIni, Cs, wsPre)
+		cat('initilizaing groups\n')
+	    groupInfo <- prepareGroup(group, J, G0, agamma, alpha, ADMMobjectIni$ws)		
+		ADMMobject <- updateISKmeans(d, K, groupInfo, ADMMobjectIni$Cs, ADMMobjectIni$ws)
+	} else {
+		cat('using defined groups\n')	
+		groupInfo <- penaltyInfo[[i]]
+		ADMMobject <- updateISKmeans(d, K, groupInfo, Cs, wsPre)
+	}
 	out[[i]] <- ADMMobject
   }
 
