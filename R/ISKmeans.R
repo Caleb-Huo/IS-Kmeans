@@ -71,11 +71,6 @@ function(d, K=NULL, gamma=NULL, alpha=0.5, group=NULL, nstart=20, wsPre=NULL  ,s
 
   ## check the input variables are complete.
   # wbounds is a vector of L1 constraints on w, of the form  sum(abs(w))<=wbounds[i]
-  if(!is.null(penaltyInfo)){
-	  if(!(length(gamma) == length(penaltyInfo))){
-		  stop('gamma and penaltyInfo must have the same length.')
-	  }
-  }
   if(is.null(K)) stop("Must provide either K or centers.")
 
   ## obtain basic information
