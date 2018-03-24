@@ -6,7 +6,7 @@ GetWCSS <- function(x, Cs, ws=NULL){
   }
   tss.perfeature <- apply(scale(x, center=TRUE, scale=FALSE)^2, 2, sum)
   bcss.perfeature <- tss.perfeature-wcss.perfeature
-  r <- bcss.perfeature/tss.perfeature
+  r <- bcss.perfeature
   
   if(!is.null(ws)) return(list(wcss.perfeature=wcss.perfeature, wcss=sum(wcss.perfeature), wcss.ws=sum(wcss.perfeature*ws),
                                bcss.perfeature=bcss.perfeature, r=r))
