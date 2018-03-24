@@ -69,4 +69,3 @@ print(gapResult)
 \author{
 Caleb
 }
-

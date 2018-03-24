@@ -4,9 +4,9 @@
 \alias{ISKmeans}
 \title{IS-Kmeans}
 \usage{
-ISKmeans(d, K = NULL, gamma = NULL, alpha = 0.5, group = NULL,
-  nstart = 20, wsPre = NULL, sparseStart = TRUE, silent = FALSE,
-  maxiter = 6)
+ISKmeans(d, K = NULL, gamma = NULL, alpha = 0.5, scale = TRUE,
+  group = NULL, nstart = 20, wsPre = NULL, penaltyInfo = NULL,
+  sparseStart = TRUE, silent = FALSE, maxiter = 20)
 }
 \arguments{
 \item{d}{combined data matrix n*J, where n is number of subjects, J=J1+J2+... and J1 is number of features in omics dataset 1 and J2 is number of features in omics dataset 2...}
@@ -23,6 +23,8 @@ ISKmeans(d, K = NULL, gamma = NULL, alpha = 0.5, group = NULL,
 
 \item{wsPre}{Initial feature weight.}
 
+\item{penaltyInfo}{only for the purpose of gap statitics. Here we will fix the penalty design to perform gap statistics. The input should be a list of groupInfo. See groupInfo for details.}
+
 \item{sparseStart}{Use Sparse Kmeans to do initialization.}
 
 \item{silent}{Output progress.}
@@ -35,9 +37,8 @@ m lists, m is length of gamma parameters. Each list is consisting of
 \item{ws}{weight for each feature. Zero weight means the feature is not selected.}
 \item{Cs}{Cluster Assignment}
 \item{objective}{objective value}
-\item{BIC}{BIC, used for tuning parameter selection.}
-\item{gamma}{gamma parameter for the list}
-item{alpha}{alpha parameter for the list}
+\item{obj0}{sum of weighted separation ability. This term is for the purpose of gap statistics.}
+\item{groupInfo}{a list containing group design, alpha, gamma}
 }
 \description{
 Integrative Sparse KMeans
@@ -85,4 +86,3 @@ iRes <- ISKmeans(d, K=3, gamma=0.5, alpha=0.5, group=group)
 \author{
 Caleb
 }
-

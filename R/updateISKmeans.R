@@ -30,9 +30,9 @@ updateISKmeans <- function(d, K, groupInfo, Cs, ws, silent=FALSE, maxiter=20){
 	} else {
 		ADMMobject <- UpdateWsADMM(d, Cs, ws, currentY=currentY, groupInfo)
 		ws <- ADMMobject$z
-		print(sum(ws!=0))
+		#print(sum(ws!=0))
 		currentY <- ADMMobject$currentY	
-		print(ADMMobject$objective)
+		#print(ADMMobject$objective)
 				
 	}
   }
