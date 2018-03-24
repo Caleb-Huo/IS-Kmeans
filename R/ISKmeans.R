@@ -6,7 +6,7 @@
 ##' @param K number of clusters
 ##' @param gamma Penalty on total number of features. Larger gamma will yeild small number of selected features.
 ##' @param alpha balance between group sparsity and individual sparsity. alpha=1 yeilds no group sparsity. alpha=0 yeilds no individual penalty.
-##' @scale If scale the data to mean 0 and sd 1. By default, scale is TRUE.
+##' @param If scale the data to mean 0 and sd 1. By default, scale is TRUE.
 ##' @param group Prior group information. Potentially these group can contain overlap features. group is a list and each element of the list is feature index.
 ##' @param nstart Number of initials for Kmeans for sparse Kmeans
 ##' @param wsPre Initial feature weight.
@@ -22,6 +22,7 @@
 ##' \item{obj0}{sum of weighted separation ability. This term is for the purpose of gap statistics.}
 ##' \item{groupInfo}{a list containing group design, alpha, gamma}
 ##' @export
+##' @useDynLib ISKmeans
 ##' @author Caleb
 ##' @examples
 ##' set.seed(123)

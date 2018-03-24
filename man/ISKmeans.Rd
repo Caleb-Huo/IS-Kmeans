@@ -30,6 +30,8 @@ ISKmeans(d, K = NULL, gamma = NULL, alpha = 0.5, scale = TRUE,
 \item{silent}{Output progress.}
 
 \item{maxiter}{Maximum numbre of iteration between ws and Cs.}
+
+\item{If}{scale the data to mean 0 and sd 1. By default, scale is TRUE.}
 }
 \value{
 m lists, m is length of gamma parameters. Each list is consisting of
