@@ -41,8 +41,8 @@ prepareGroup <- function(group, J, G0, gamma, alpha, ws){
 		  genePos[curPos:endPos] <- agroup
 		  a_inv_groupFeatureCounts <- 1/groupFeatureCounts[agroup]
 		  agroupPenalty <- max(sum(a_inv_groupFeatureCounts[aws!=0]),1)
-		  cat(agroupPenalty)
-		  cat(' ')
+		  #cat(agroupPenalty)
+		  #cat(' ')
 		  coef[curPos:endPos] <- preCoef*sqrt(a_inv_groupFeatureCounts)*sqrt(agroupPenalty)
 		  curPos <- curPos + alen
 	  }  	
