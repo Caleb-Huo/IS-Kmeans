@@ -85,8 +85,8 @@ function(d, K=NULL, gamma=NULL, alpha=0.5, scale = TRUE, group=NULL, nstart=20, 
   G0 <- length(group)
 
   if(scale){
-	  d <- scale(d)
 	  featureSD <- apply(d,2,sd)
+	  d <- scale(d)
 	  d[,featureSD==0] <- 0
   }
 	
