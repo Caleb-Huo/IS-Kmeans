@@ -1,9 +1,7 @@
 UpdateWsADMM <- function(d, Cs, ws, currentY=NULL, groupInfo){
 
-    wcss.perfeature <- GetWCSS(d, Cs)$wcss.perfeature
-    tss.perfeature <- GetWCSS(d, rep(1, nrow(d)))$wcss.perfeature
-    bcss.perfeature <- tss.perfeature - wcss.perfeature
-    r <- bcss.perfeature/tss.perfeature
+
+  r <- GetWCSS(d, Cs)$r
 
   J <- groupInfo$J
   L <- groupInfo$L
