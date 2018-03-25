@@ -6,7 +6,6 @@
 ##' @param K number of clusters
 ##' @param gamma Penalty on total number of features. Larger gamma will yeild small number of selected features.
 ##' @param alpha balance between group sparsity and individual sparsity. alpha=1 yeilds no group sparsity. alpha=0 yeilds no individual penalty.
-##' @param If scale the data to mean 0 and sd 1. By default, scale is TRUE.
 ##' @param group Prior group information. Potentially these group can contain overlap features. group is a list and each element of the list is feature index.
 ##' @param nstart Number of initials for Kmeans for sparse Kmeans
 ##' @param wsPre Initial feature weight.
@@ -61,7 +60,7 @@
 ##' iRes <- ISKmeans(d, K=3, gamma=0.5, alpha=0.5, group=group)
 ##'
 ISKmeans <-
-function(d, K=NULL, gamma=NULL, alpha=0.5, scale = TRUE, group=NULL, nstart=20, wsPre=NULL ,penaltyInfo=NULL ,sparseStart=TRUE ,silent=FALSE, maxiter=20){
+function(d, K=NULL, gamma=NULL, alpha=0.5, group=NULL, nstart=20, wsPre=NULL ,penaltyInfo=NULL ,sparseStart=TRUE ,silent=FALSE, maxiter=20){
   # The criterion is : minimize_{w, C} sum_j w_j (R_j) + gamma_1*\sum_group penalty + gamma_2*||w||_1 s.t. ||w||_2=1, w_j>=0
   # x is the data, nxp
   # K is the number of clusters desired
@@ -84,13 +83,12 @@ function(d, K=NULL, gamma=NULL, alpha=0.5, scale = TRUE, group=NULL, nstart=20, 
   ## obtain basic information
   J <- ncol(d)
   G0 <- length(group)
-
-  if(scale){
-	  featureSD <- apply(d,2,sd)
-	  d <- scale(d)
-	  d[,featureSD==0] <- 0
-  }
-	
+  
+  ## convert BCSS to BCSS/TSS
+  tss.x <- apply(scale(d, center = TRUE, scale = FALSE)^2, 2, sum)
+  d <- sweep(d, 2, sqrt(1/tss.x), "*")
+  d[,tss.x==0] <- 0
+  
   ## initialization, ws, Y
   if(!is.null(wsPre)){
 	## pre-specify ws

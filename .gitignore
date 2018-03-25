@@ -39,3 +39,8 @@ vignettes/*.pdf
 *.so
 *.o
 *.rds
+
+## MAC files
+.DS_Store
+
+.gitignore~
